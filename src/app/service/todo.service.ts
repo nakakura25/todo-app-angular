@@ -13,10 +13,26 @@ export class TodoService {
   constructor(private http: HttpClient,) { }
 
   getTodoList(callback: any) {
-    this.http.get('/api/index').subscribe(
+    this.http.get('/api/todo/index').subscribe(
       response => {
         console.log(response);
         callback(response);
+      },
+      error => {
+        console.log(error);
+      }
+    )
+  }
+
+  getCategoryMap(callback: any) {
+    this.http.get('/api/todo/catmap').subscribe(
+      response => {
+        let map = new Map<number, string>();
+        Object.entries(response).forEach(res => {
+//           console.log(`${res[1][0]} and ${res[1][1]}`);
+          map.set(Number(res[1][0]), res[1][1])
+        });
+        callback(map);
       },
       error => {
         console.log(error);

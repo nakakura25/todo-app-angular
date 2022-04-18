@@ -13,7 +13,11 @@ export class TodoListComponent implements OnInit {
   constructor(private todoService: TodoService,) { }
 
   todos: Todo[] = [];
+  catMap: any;
   ngOnInit(): void {
+    this.todoService.getCategoryMap((response: Todo[]) => {
+      this.catMap = response
+    });
     this.todoService.getTodoList((response: Todo[]) => {
       this.todos = response
     });
