@@ -12,16 +12,14 @@ export class TodoListComponent implements OnInit {
 
   constructor(private todoService: TodoService,) { }
 
-  result: any;
+  todos: Todo[] = [];
   ngOnInit(): void {
-    this.todoService.getTodoList((response: any) => {
-      this.result = response
-      console.log(this.result["name"]);
+    this.todoService.getTodoList((response: Todo[]) => {
+      this.todos = response
     });
   }
 
   title = 'Todo一覧';
-  todos: Todo[] = this.todoService.getTodos();
 
   stateMap = new Map([
     [0, 'TODO'],
