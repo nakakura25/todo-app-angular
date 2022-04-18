@@ -14,20 +14,18 @@ export class TodoListComponent implements OnInit {
 
   todos: Todo[] = [];
   catMap: any;
+  stateMap: any;
   ngOnInit(): void {
     this.todoService.getCategoryMap((response: Todo[]) => {
-      this.catMap = response
+      this.catMap = response;
+    });
+    this.todoService.getStateMap((response: Todo[]) => {
+      this.stateMap = response;
     });
     this.todoService.getTodoList((response: Todo[]) => {
-      this.todos = response
+      this.todos = response;
     });
   }
 
   title = 'Todo一覧';
-
-  stateMap = new Map([
-    [0, 'TODO'],
-    [1, '進行中'],
-    [2, '完了'],
-  ]);
 }

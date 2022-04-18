@@ -29,7 +29,21 @@ export class TodoService {
       response => {
         let map = new Map<number, string>();
         Object.entries(response).forEach(res => {
-//           console.log(`${res[1][0]} and ${res[1][1]}`);
+          map.set(Number(res[1][0]), res[1][1])
+        });
+        callback(map);
+      },
+      error => {
+        console.log(error);
+      }
+    )
+  }
+
+  getStateMap(callback: any) {
+    this.http.get('/api/todo/statemap').subscribe(
+      response => {
+        let map = new Map<number, string>();
+        Object.entries(response).forEach(res => {
           map.set(Number(res[1][0]), res[1][1])
         });
         callback(map);
