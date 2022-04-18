@@ -3,12 +3,26 @@ import { HttpClient, HttpParams, HttpHeaders, } from '@angular/common/http';
 
 import { Todo } from '../models/Todo'
 
+import { Observable, of } from 'rxjs';
+
 @Injectable({
   providedIn: 'root'
 })
 export class TodoService {
 
   constructor(private http: HttpClient,) { }
+
+  getTodoList(callback: any) {
+    this.http.get('/api/index').subscribe(
+      response => {
+        console.log(response);
+        callback(response);
+      },
+      error => {
+        console.log(error);
+      }
+    )
+  }
 
   getTodos(): Todo[] {
     return [

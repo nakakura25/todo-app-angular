@@ -10,9 +10,14 @@ import { Todo } from '../../models/Todo'
 })
 export class TodoListComponent implements OnInit {
 
-  constructor(private todoService: TodoService) { }
+  constructor(private todoService: TodoService,) { }
 
+  result: any;
   ngOnInit(): void {
+    this.todoService.getTodoList((response: any) => {
+      this.result = response
+      console.log(this.result["name"]);
+    });
   }
 
   title = 'Todo一覧';
