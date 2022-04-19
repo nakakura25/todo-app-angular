@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 
 @Component({
   selector: 'app-todo-register',
@@ -7,9 +8,28 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TodoRegisterComponent implements OnInit {
 
-  constructor() { }
+  constructor(private builder: FormBuilder,) { }
 
   ngOnInit(): void {
   }
 
+  title = new FormControl('', [
+    Validators.required
+  ]);
+  body = new FormControl('', [
+    Validators.required
+  ]);
+  category = new FormControl('', [
+    Validators.required
+  ]);
+
+  todoForm = this.builder.group({
+    title:    this.title,
+    body:     this.body,
+    category: this.category,
+  });
+
+  register() {
+    console.log('ok');
+  }
 }

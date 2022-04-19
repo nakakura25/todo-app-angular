@@ -1,22 +1,26 @@
 <h1>{{title}}</h1>
 <div class="todo_header">
   <div class="todo_header_item">
-    <a href="#"
+    <a routerLink="/todo/store" routerLinkActive="current"
        style="text-decoration: none;">
       <label>Todo登録</label>
     </a>
   </div>
 </div>
 <div *ngFor="let todo of todos" class="card">
-  <div class="card_content" [ngStyle]="{'background-color': colorMap.get(todo.color) }">
+  <div (click)=onSelect(todo)
+       class="card_content" [ngStyle]="{'background-color': colorMap.get(todo.color) }">
     <div><label>Title:</label>{{todo.title}}</div>
     <div class="body"><label>Body:</label>{{todo.body}}</div>
     <div><label>Status:</label>{{todo.stateName}}</div>
     <div><label>Category:</label>{{todo.categoryName}}</div>
   </div>
-  <div class="card_footer">
+  <div class="card_footer" (click)="onDelete(todo)">
     <div class="card_footer_item">
       <label class="delete">削除</label>
     </div>
   </div>
+</div>
+<div id="todo-upd" *ngIf="selectedTodo">
+  <app-todo-upd [todo]="selectedTodo"></app-todo-upd>
 </div>

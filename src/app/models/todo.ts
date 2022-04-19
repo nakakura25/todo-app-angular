@@ -8,3 +8,11 @@ export interface Todo {
   color:        number;
   categoryName: string;
 }
+
+export interface FormTodo {
+  id:           number;
+  categoryId:   number;
+  title:        string;
+  body:         string;
+  state:        number;
+}

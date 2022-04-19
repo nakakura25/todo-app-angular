@@ -1,1 +1,20 @@
-<p>todo-register works!</p>
+<form [formGroup]="todoForm" (ngSubmit)="register()">
+  <div>
+    <label for="title">Title：</label><br/>
+    <input id="title" name="title" type="text" [formControl]="title" size="40" />
+    <span *ngIf="title.errors?.['required']">Titleは必須です。</span>
+  </div>
+  <div>
+    <label for="body">Body：</label><br/>
+    <textarea id="body" name="body" rows="3" cols="40" [formControl]="body"></textarea>
+    <span *ngIf="body.errors?.['required']">Bodyは必須です。</span>
+  </div>
+  <div>
+    <label for="category">Category：</label><br/>
+    <input id="category" name="category" type="text" [formControl]="category" />
+    <span *ngIf="category.errors?.['required']">Categoryは必須です。</span>
+  </div>
+  <div>
+    <input type="submit" value="送信" [disabled]="todoForm.invalid" />
+  </div>
+</form>
