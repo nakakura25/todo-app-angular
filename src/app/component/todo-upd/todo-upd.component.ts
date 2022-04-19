@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnChanges, Input } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 
 import { TodoService } from  '../../service/todo.service'
@@ -9,13 +9,13 @@ import { Todo } from '../../models/Todo'
   templateUrl: './todo-upd.component.html',
   styleUrls: ['./todo-upd.component.css']
 })
-export class TodoUpdComponent implements OnInit {
+export class TodoUpdComponent implements OnChanges {
   @Input('todo') todo?: Todo;
 
   constructor(private builder: FormBuilder,
   private todoService: TodoService) { }
 
-  ngOnInit(): void {
+  ngOnChanges(): void {
     this.todoForm.setValue({
       title:    this.todo?.title,
       body:     this.todo?.body,
