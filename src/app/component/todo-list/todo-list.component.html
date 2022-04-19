@@ -8,11 +8,11 @@
   </div>
 </div>
 <div *ngFor="let todo of todos" class="card">
-  <div class="card_content">
+  <div class="card_content" [ngStyle]="{'background-color': colorMap.get(todo.color) }">
     <div><label>Title:</label>{{todo.title}}</div>
     <div class="body"><label>Body:</label>{{todo.body}}</div>
-    <div><label>Status:</label>{{stateMap.get(todo.state)}}</div>
-    <div><label>Category:</label>{{catMap.get(todo.categoryId)}}</div>
+    <div><label>Status:</label>{{todo.stateName}}</div>
+    <div><label>Category:</label>{{todo.categoryName}}</div>
   </div>
   <div class="card_footer">
     <div class="card_footer_item">

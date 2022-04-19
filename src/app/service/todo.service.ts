@@ -3,7 +3,7 @@ import { HttpClient, HttpParams, HttpHeaders, } from '@angular/common/http';
 
 import { Todo } from '../models/Todo'
 
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,70 +13,23 @@ export class TodoService {
   constructor(private http: HttpClient,) { }
 
   getTodoList(callback: any) {
-    this.http.get('/api/todo/index').subscribe(
-      response => {
+    interface responseObj {
+      [key: string]: any
+    }
+    this.http.get('http://localhost:9000/api/todo/index').subscribe(
+      (response: responseObj) => {
+        const todos    = 'todos' in response ? response["todos"] : '';
+        const color = 'color' in response ? response["color"] : '';
+        let colorMap = new Map<number, string>();
+        color.map((res: any) => {
+          colorMap.set(Number(res[0]), res[1])
+        });
         console.log(response);
-        callback(response);
+        callback(todos, colorMap);
       },
       error => {
         console.log(error);
       }
     )
   }
-
-  getCategoryMap(callback: any) {
-    this.http.get('/api/todo/catmap').subscribe(
-      response => {
-        let map = new Map<number, string>();
-        Object.entries(response).forEach(res => {
-          map.set(Number(res[1][0]), res[1][1])
-        });
-        callback(map);
-      },
-      error => {
-        console.log(error);
-      }
-    )
-  }
-
-  getStateMap(callback: any) {
-    this.http.get('/api/todo/statemap').subscribe(
-      response => {
-        let map = new Map<number, string>();
-        Object.entries(response).forEach(res => {
-          map.set(Number(res[1][0]), res[1][1])
-        });
-        callback(map);
-      },
-      error => {
-        console.log(error);
-      }
-    )
-  }
-
-  getTodos(): Todo[] {
-    return [
-      {
-        id:         1,
-        categoryId: 1,
-        title:      'hogehoge',
-        body:       'fugafuga',
-        state:      0,
-      },
-      {
-        id:         2,
-        categoryId: 2,
-        title:      'title sample',
-        body:       'body sample',
-        state:      1,
-      },
-      {
-        id:         3,
-        categoryId: 1,
-        title:      'title test',
-        body:       'body test',
-        state:      2,
-      },
-    ]
-  };
 }
