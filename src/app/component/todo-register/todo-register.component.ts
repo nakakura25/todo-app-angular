@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 
+import { TodoService } from  '../../service/todo.service'
+import { Todo } from '../../models/Todo'
+
 @Component({
   selector: 'app-todo-register',
   templateUrl: './todo-register.component.html',
@@ -8,7 +11,8 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 })
 export class TodoRegisterComponent implements OnInit {
 
-  constructor(private builder: FormBuilder,) { }
+  constructor(private builder: FormBuilder,
+  private todoService: TodoService) { }
 
   ngOnInit(): void {
   }

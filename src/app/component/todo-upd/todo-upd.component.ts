@@ -12,7 +12,8 @@ import { Todo } from '../../models/Todo'
 export class TodoUpdComponent implements OnInit {
   @Input('todo') todo?: Todo;
 
-  constructor(private builder: FormBuilder,) { }
+  constructor(private builder: FormBuilder,
+  private todoService: TodoService) { }
 
   ngOnInit(): void {
     this.todoForm.setValue({
