@@ -34,7 +34,8 @@ export class CategoryRegisterComponent implements OnInit {
     Validators.required
   ]);
   slug = new FormControl('', [
-    Validators.required
+    Validators.required,
+    Validators.pattern('[0-9a-zA-Z]+')
   ]);
   color = new FormControl('', [
     Validators.required

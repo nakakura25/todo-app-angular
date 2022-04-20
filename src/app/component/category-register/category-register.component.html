@@ -9,6 +9,7 @@
     <label for="slug">Slug：</label><br/>
     <input id="slug" name="slug" type="text" [formControl]="slug" size="40" />
     <span *ngIf="slug.errors?.['required']">Slugは必須です。</span>
+    <span *ngIf="slug.errors?.['pattern']">Slugは英数字のみ入力可能です。</span>
   </div>
   <div>
     <label for="color">Color：</label><br/>
