@@ -12,7 +12,9 @@
        class="card_content">
     <div><label>Name:</label>{{category.name}}</div>
     <div><label>Slug:</label>{{category.slug}}</div>
-    <div><label>Color:</label>{{category.color}}</div>
+    <div [ngStyle]="{'background-color': colorMap.get(category.color) }">
+      <label>Color:</label>{{colorMap.get(category.color)}}
+    </div>
   </div>
   <div class="card_footer">
     <div class="card_footer_item" (click)="onDelete(category)">

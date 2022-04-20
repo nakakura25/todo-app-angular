@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Category } from '../../models/Category'
+import { CategoryService } from  '../../service/category.service'
+
+import { Category, CategoryListResponse } from '../../models/Category'
+import { Color } from '../../models/Color'
 
 @Component({
   selector: 'app-category-list',
@@ -9,12 +12,28 @@ import { Category } from '../../models/Category'
 })
 export class CategoryListComponent implements OnInit {
   headTitle = 'カテゴリー一覧'
-//   categories: Category[] = [];
+  categories: Category[] = [];
+  colorMap: Map<number, string> = new Map<number, string>();
   selectedCategory?: Category;
 
-  constructor() { }
+  constructor(private categoryService: CategoryService) { }
 
   ngOnInit(): void {
+    this.showCategoryList();
+  }
+
+  showCategoryList() {
+    this.categoryService.getCategoryList().subscribe(
+      (response: CategoryListResponse) => {
+        this.categories = response["category"];
+        response["color"].map((res: Color) => {
+          this.colorMap.set(res['id'], res['color']);
+        });
+      },
+      error => {
+        console.log(error);
+      }
+    )
   }
 
   onSelect(category: Category) {
@@ -30,31 +49,4 @@ export class CategoryListComponent implements OnInit {
   onUpdate(category: Category) {
     console.log('onUpdate');
   }
-
-  categories: Category[] = [
-    {
-      id: 1,
-      name: 'AAA',
-      slug: 'AAA',
-      color: 1,
-    },
-    {
-      id: 2,
-      name: 'BBB',
-      slug: 'CCC',
-      color: 3,
-    },
-    {
-      id: 3,
-      name: 'CCC',
-      slug: 'CCC',
-      color: 4,
-    },
-    {
-      id: 4,
-      name: 'DDD',
-      slug: 'DDD',
-      color: 2,
-    },
-  ];
 }
