@@ -40,7 +40,6 @@ export class CategoryListComponent implements OnInit {
   }
 
   onSelect(category: Category) {
-    console.log('onSelect');
     this.selectedCategory = category;
   }
 
