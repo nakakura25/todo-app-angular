@@ -16,3 +16,13 @@ export interface FormTodo {
   body:         string;
   state:        number;
 }
+
+export interface TodoListResponse {
+  'todos': Array<Todo>;
+  'color': Array<Color>;
+}
+
+export interface Color {
+  id:           number;
+  color:        string;
+}
