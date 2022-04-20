@@ -13,6 +13,7 @@ import { Category } from '../../models/Category'
   styleUrls: ['./todo-register.component.css']
 })
 export class TodoRegisterComponent implements OnInit {
+  headTitle = 'Todo登録'
   categoryOptions: Category[] = [];
 
   constructor(private builder: FormBuilder,
@@ -50,11 +51,15 @@ export class TodoRegisterComponent implements OnInit {
     }
     this.todoService.registerTodo(todo).subscribe(
       response => {
-        this.route.navigate(['/'])
+        this.route.navigate(['/']);
       },
       error => {
         console.log(error);
       }
     )
+  }
+
+  back() {
+    this.route.navigate(['/']);
   }
 }

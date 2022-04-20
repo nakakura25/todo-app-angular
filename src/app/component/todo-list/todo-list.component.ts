@@ -15,7 +15,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./todo-list.component.css']
 })
 export class TodoListComponent implements OnInit {
-  title = 'Todo一覧';
+  headTitle = 'Todo一覧';
   todos: Todo[] = [];
   colorMap: Map<number, string> = new Map<number, string>();
   stateOptions: Status[] = [];

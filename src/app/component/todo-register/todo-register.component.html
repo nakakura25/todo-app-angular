@@ -1,3 +1,4 @@
+<h1>{{headTitle}}</h1>
 <form [formGroup]="todoForm" (ngSubmit)="register()">
   <div>
     <label for="title">Title：</label><br/>
@@ -17,7 +18,12 @@
       </option>
     </select>
   </div>
-  <div>
-    <input type="submit" value="送信" [disabled]="todoForm.invalid" />
+  <div class="button-area">
+    <div class="form-button">
+      <input type="button" value="戻る" (click)="back()" />
+    </div>
+    <div class="form-button">
+      <input type="submit" value="送信" [disabled]="todoForm.invalid" />
+    </div>
   </div>
 </form>

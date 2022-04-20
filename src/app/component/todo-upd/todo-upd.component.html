@@ -1,4 +1,5 @@
 <div *ngIf="todo" >
+  <h1>{{headTitle}}</h1>
   <form [formGroup]="todoForm" (ngSubmit)="update()">
     <div>
       <label for="title">Title：</label><br/>
@@ -24,8 +25,13 @@
         <option *ngFor="let stateOpt of stateOptions" value="{{stateOpt.code}}">{{stateOpt.name}}</option>
       </select>
     </div>
-    <div>
-      <input type="submit" value="送信" [disabled]="todoForm.invalid" />
+    <div class="button-area">
+      <div class="form-button">
+        <input type="button" value="リセット" (click)="reset()" />
+      </div>
+      <div class="form-button">
+        <input type="submit" value="送信" [disabled]="todoForm.invalid" />
+      </div>
     </div>
   </form>
 </div>

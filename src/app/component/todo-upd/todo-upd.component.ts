@@ -17,6 +17,8 @@ export class TodoUpdComponent implements OnChanges {
   @Input('categoryOptions') categoryOptions?: Category[];
   @Output('upd') edited = new EventEmitter<Todo>();
 
+  headTitle = 'Todo更新';
+
   constructor(private builder: FormBuilder,
   private todoService: TodoService) { }
 
@@ -57,12 +59,15 @@ export class TodoUpdComponent implements OnChanges {
     }
     this.todoService.updateTodo(todo).subscribe(
       response => {
-        this.todo = undefined;
-        this.edited.emit(this.todo)
+        this.edited.emit(this.todo);
       },
       error => {
         console.log(error);
       }
     )
+  }
+
+  reset() {
+    this.todo = undefined;
   }
 }
