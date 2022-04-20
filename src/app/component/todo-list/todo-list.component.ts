@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 import { TodoService } from  '../../service/todo.service'
-import { Todo, TodoListResponse, Color } from '../../models/Todo'
+
+import { Todo, TodoListResponse } from '../../models/Todo'
+import { Color } from '../../models/Color'
+import { Status } from '../../models/Status'
+import { Category } from '../../models/Category'
 
 import { Observable } from 'rxjs';
 
@@ -14,6 +18,8 @@ export class TodoListComponent implements OnInit {
   title = 'Todo一覧';
   todos: Todo[] = [];
   colorMap: Map<number, string> = new Map<number, string>();
+  stateOptions: Status[] = [];
+  categoryOptions: Category[] = [];
   selectedTodo?: Todo;
 
   constructor(private todoService: TodoService,) { }
@@ -27,6 +33,8 @@ export class TodoListComponent implements OnInit {
       .subscribe(
       (response: TodoListResponse) => {
         this.todos  = response["todos"];
+        this.stateOptions = response["status"];
+        this.categoryOptions = response["category"].filter(cat => cat.id !== 0);
         response["color"].map((res: Color) => {
           this.colorMap.set(res['id'], res['color']);
         });
@@ -38,7 +46,6 @@ export class TodoListComponent implements OnInit {
   }
 
   onSelect(todo: Todo) {
-    console.log(todo);
     this.selectedTodo = todo;
   }
 

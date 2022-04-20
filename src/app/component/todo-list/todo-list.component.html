@@ -30,5 +30,6 @@
   </div>
 </div>
 <div id="todo-upd" *ngIf="selectedTodo">
-  <app-todo-upd [todo]="selectedTodo" (upd)="onUpdate($event)"></app-todo-upd>
+  <app-todo-upd [todo]="selectedTodo" [stateOptions]="stateOptions"
+                [categoryOptions]="categoryOptions" (upd)="onUpdate($event)"></app-todo-upd>
 </div>

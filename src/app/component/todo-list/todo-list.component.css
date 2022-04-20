@@ -42,3 +42,7 @@
   font-size: 0.9em;
   cursor:    pointer;
 }
+
+.body {
+  white-space: pre-wrap;
+}

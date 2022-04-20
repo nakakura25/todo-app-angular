@@ -1,3 +1,7 @@
+import { Category } from './Category';
+import { Color } from './Color';
+import { Status } from './Status';
+
 export interface Todo {
   id:           number;
   categoryId:   number;
@@ -18,11 +22,9 @@ export interface FormTodo {
 }
 
 export interface TodoListResponse {
-  'todos': Todo[];
-  'color': Color[];
+  'todos':    Todo[];
+  'color':    Color[];
+  'category': Category[];
+  'status':   Status[]
 }
 
-export interface Color {
-  id:           number;
-  color:        string;
-}
