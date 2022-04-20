@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders, } from '@angular/common/http';
 
 import { Todo, TodoListResponse, FormTodo } from '../models/Todo'
+import { Category } from '../models/Category'
 
 import { Observable } from 'rxjs';
 
@@ -9,6 +10,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class TodoService {
+  categoryOptions: Category[] = [];
 
   constructor(private http: HttpClient,) { }
 
@@ -41,4 +43,13 @@ export class TodoService {
   deleteTodo(id: number): Observable<unknown> {
     return this.http.delete(`${this.url}/${id}`);
   }
+
+  setCategoryOptions(category: Category[]) {
+    this.categoryOptions = category;
+  }
+
+  getCategoryOptions(): Category[] {
+    return this.categoryOptions;
+  }
+
 }

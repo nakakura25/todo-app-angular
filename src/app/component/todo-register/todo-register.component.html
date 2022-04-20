@@ -11,8 +11,11 @@
   </div>
   <div>
     <label for="category">Category：</label><br/>
-    <input id="category" name="category" type="text" [formControl]="category" />
-    <span *ngIf="category.errors?.['required']">Categoryは必須です。</span>
+    <select id="category" name="category" [formControl]="category">
+      <option *ngFor="let categoryOpt of categoryOptions" value="{{categoryOpt.id}}">
+        {{categoryOpt.name}}
+      </option>
+    </select>
   </div>
   <div>
     <input type="submit" value="送信" [disabled]="todoForm.invalid" />

@@ -34,10 +34,11 @@ export class TodoListComponent implements OnInit {
       (response: TodoListResponse) => {
         this.todos  = response["todos"];
         this.stateOptions = response["status"];
-        this.categoryOptions = response["category"].filter(cat => cat.id !== 0);
         response["color"].map((res: Color) => {
           this.colorMap.set(res['id'], res['color']);
         });
+        this.categoryOptions = response["category"].filter(cat => cat.id !== 0);
+        this.todoService.setCategoryOptions(this.categoryOptions);
       },
       error => {
         console.log(error);
@@ -53,6 +54,7 @@ export class TodoListComponent implements OnInit {
     console.log(todo);
     this.todoService.deleteTodo(todo.id).subscribe(
       response => {
+        this.selectedTodo = undefined;
         this.showTodoList();
       },
       error => {
