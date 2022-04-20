@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./todo-list.component.css']
 })
 export class TodoListComponent implements OnInit {
+  title = 'Todo一覧';
   todos: Todo[] = [];
   colorMap: Map<number, string> = new Map<number, string>();
   selectedTodo?: Todo;
@@ -25,7 +26,6 @@ export class TodoListComponent implements OnInit {
     this.todoService.getTodoList()
       .subscribe(
       (response: TodoListResponse) => {
-        console.log(response);
         this.todos  = response["todos"];
         response["color"].map((res: Color) => {
           this.colorMap.set(res['id'], res['color']);
@@ -53,5 +53,8 @@ export class TodoListComponent implements OnInit {
       }
     )
   }
-  title = 'Todo一覧';
+
+  onUpdate(todo: Todo) {
+    this.showTodoList();
+  }
 }

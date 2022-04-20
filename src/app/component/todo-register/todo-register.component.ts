@@ -1,21 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 
 import { TodoService } from  '../../service/todo.service'
-import { Todo } from '../../models/Todo'
+import { Todo, FormTodo } from '../../models/Todo'
 
 @Component({
   selector: 'app-todo-register',
   templateUrl: './todo-register.component.html',
   styleUrls: ['./todo-register.component.css']
 })
-export class TodoRegisterComponent implements OnInit {
+export class TodoRegisterComponent {
 
   constructor(private builder: FormBuilder,
   private todoService: TodoService) { }
-
-  ngOnInit(): void {
-  }
 
   title = new FormControl('', [
     Validators.required
@@ -34,6 +31,20 @@ export class TodoRegisterComponent implements OnInit {
   });
 
   register() {
-    console.log('ok');
+    const todo: FormTodo = {
+      id:            0,
+      categoryId:    Number(this.category.value),
+      title:         this.title.value,
+      body:          this.body.value,
+      state:         0
+    }
+    this.todoService.registerTodo(todo).subscribe(
+      response => {
+        console.log(response);
+      },
+      error => {
+        console.log(error);
+      }
+    )
   }
 }

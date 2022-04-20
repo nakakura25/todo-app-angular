@@ -1,8 +1,8 @@
-import { Component, OnChanges, Input } from '@angular/core';
+import { Component, OnChanges, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 
 import { TodoService } from  '../../service/todo.service'
-import { Todo } from '../../models/Todo'
+import { Todo, FormTodo } from '../../models/Todo'
 
 @Component({
   selector: 'app-todo-upd',
@@ -11,6 +11,7 @@ import { Todo } from '../../models/Todo'
 })
 export class TodoUpdComponent implements OnChanges {
   @Input('todo') todo?: Todo;
+  @Output('upd') edited = new EventEmitter<Todo>();
 
   constructor(private builder: FormBuilder,
   private todoService: TodoService) { }
@@ -45,7 +46,22 @@ export class TodoUpdComponent implements OnChanges {
   });
 
   update() {
-    console.log('todo upd')
-    this.todo = undefined;
+    const todo: FormTodo = {
+      id:            Number(this.todo?.id),
+      categoryId:    Number(this.category.value),
+      title:         this.title.value,
+      body:          this.body.value,
+      state:         Number(this.state.value)
+    }
+    this.todoService.updateTodo(todo).subscribe(
+      response => {
+        console.log(response);
+        this.todo = undefined;
+        this.edited.emit(this.todo)
+      },
+      error => {
+        console.log(error);
+      }
+    )
   }
 }

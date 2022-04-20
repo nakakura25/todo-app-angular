@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders, } from '@angular/common/http';
 
-import { Todo, TodoListResponse } from '../models/Todo'
+import { Todo, TodoListResponse, FormTodo } from '../models/Todo'
 
 import { Observable } from 'rxjs';
 
@@ -12,12 +12,33 @@ export class TodoService {
 
   constructor(private http: HttpClient,) { }
 
+  url = 'http://localhost:9000/api/todo';
+
   getTodoList(): Observable<TodoListResponse> {
-    return this.http.get<TodoListResponse>('http://localhost:9000/api/todo/index')
+    return this.http.get<TodoListResponse>(this.url)
+  }
+
+  registerTodo(todo: FormTodo): Observable<unknown> {
+    return this.http.post(this.url, {
+      id:         0,
+      categoryId: todo['categoryId'],
+      title:      todo['title'],
+      body:       todo['body'],
+      state:      todo['state']
+    })
+  }
+
+  updateTodo(todo: FormTodo): Observable<unknown> {
+    return this.http.put(this.url, {
+      id:         todo['id'],
+      categoryId: todo['categoryId'],
+      title:      todo['title'],
+      body:       todo['body'],
+      state:      todo['state']
+    })
   }
 
   deleteTodo(id: number): Observable<unknown> {
-    const url = `http://localhost:9000/api/todo/${id}/delete`;
-    return this.http.delete(url);
+    return this.http.delete(`${this.url}/${id}`);
   }
 }
