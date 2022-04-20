@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, Params } from '@angular/router';
 
 import { CategoryService } from  '../../service/category.service'
 
@@ -17,7 +18,8 @@ export class CategoryListComponent implements OnInit {
   colorOptions: Color[] = [];
   selectedCategory?: Category;
 
-  constructor(private categoryService: CategoryService) { }
+  constructor(private categoryService: CategoryService,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.showCategoryList();
@@ -41,6 +43,7 @@ export class CategoryListComponent implements OnInit {
 
   onSelect(category: Category) {
     this.selectedCategory = category;
+    this.router.navigate(['/category'], { fragment: '' })
   }
 
   onDelete(category: Category) {

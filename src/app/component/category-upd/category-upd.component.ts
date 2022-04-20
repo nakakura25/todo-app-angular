@@ -15,10 +15,10 @@ import { Color } from '../../models/Color'
 export class CategoryUpdComponent implements OnChanges {
   @Input('category') category?: Category;
   @Input('colorOptions') colorOptions?: Color[];
+  @Input('colorMap') colorMap?: Map<number, string>;
   @Output('upd') edited = new EventEmitter<Category>();
 
   headTitle = 'カテゴリー更新';
-  colorMap: Map<number, string> = new Map<number, string>();
   selectedValue = 0;
 
   constructor(private builder: FormBuilder,
@@ -32,6 +32,8 @@ export class CategoryUpdComponent implements OnChanges {
         slug:  this.category?.slug,
         color: this.category?.color
       });
+      this.selectedValue = Number(this.color.value);
+      this.router.navigate(['/category'], { fragment: 'category_upd' })
     }
   }
 
@@ -58,7 +60,8 @@ export class CategoryUpdComponent implements OnChanges {
     this.selectedValue = Number(this.color.value);
   }
 
-  back() {
-    this.router.navigate(['/category']);
+  reset() {
+    this.category = undefined
+    this.router.navigate(['/category'], { fragment: '' })
   }
 }

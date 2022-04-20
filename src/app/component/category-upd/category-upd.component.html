@@ -14,7 +14,7 @@
     <div>
       <label for="color">Color：</label><br/>
       <select id="color" name="color" [formControl]="color" (change)="colorChange(color)"
-              [style.background-color]="colorMap.get(selectedValue)">
+              [style.background-color]="colorMap?.get(selectedValue)">
         <option *ngFor="let colorOpt of colorOptions" value="{{colorOpt.id}}">
           {{colorOpt.color}}
         </option>
@@ -22,7 +22,7 @@
     </div>
     <div class="button-area">
       <div class="form-button">
-        <input type="button" value="戻る" (click)="back()" />
+        <input type="button" value="リセット" (click)="reset()" />
       </div>
       <div class="form-button">
         <input type="submit" value="送信" [disabled]="categoryForm.invalid" />
