@@ -14,6 +14,7 @@ export class CategoryListComponent implements OnInit {
   headTitle = 'カテゴリー一覧'
   categories: Category[] = [];
   colorMap: Map<number, string> = new Map<number, string>();
+  colorOptions: Color[] = [];
   selectedCategory?: Category;
 
   constructor(private categoryService: CategoryService) { }
@@ -26,9 +27,11 @@ export class CategoryListComponent implements OnInit {
     this.categoryService.getCategoryList().subscribe(
       (response: CategoryListResponse) => {
         this.categories = response["category"];
-        response["color"].map((res: Color) => {
+        this.colorOptions = response["color"];
+        this.colorOptions.map((res: Color) => {
           this.colorMap.set(res['id'], res['color']);
         });
+        this.categoryService.setColorOptions(this.colorOptions);
       },
       error => {
         console.log(error);

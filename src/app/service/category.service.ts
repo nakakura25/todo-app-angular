@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders, } from '@angular/common/http';
 
 import { Category, CategoryListResponse } from '../models/Category'
+import { Color } from '../models/Color'
 
 import { Observable } from 'rxjs';
 
@@ -9,6 +10,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class CategoryService {
+  colorOptions: Color[] = [];
 
   constructor(private http: HttpClient,) { }
 
@@ -16,6 +18,14 @@ export class CategoryService {
 
   getCategoryList(): Observable<CategoryListResponse> {
     return this.http.get<CategoryListResponse>(this.url);
+  }
+
+  setColorOptions(colors: Color[]) {
+    this.colorOptions = colors;
+  }
+
+  getColorOptions(): Color[] {
+    return this.colorOptions;
   }
 
 }
