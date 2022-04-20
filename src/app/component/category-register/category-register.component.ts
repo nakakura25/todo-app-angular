@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./category-register.component.css']
 })
 export class CategoryRegisterComponent implements OnInit {
+  headTitle = 'カテゴリー登録';
 
   constructor() { }
 

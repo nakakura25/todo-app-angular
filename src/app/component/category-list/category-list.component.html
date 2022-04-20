@@ -1,1 +1,33 @@
-<p>category-list works!</p>
+<h1>{{headTitle}}</h1>
+<div id="top" class="todo_header">
+  <div class="todo_header_item">
+    <a routerLink="/category/store"  routerLinkActive="current"
+       style="text-decoration: none;">
+      <label>カテゴリー登録</label>
+    </a>
+  </div>
+</div>
+<div *ngFor="let category of categories" class="card">
+  <div (click)="onSelect(category)"
+       class="card_content">
+    <div><label>Name:</label>{{category.name}}</div>
+    <div><label>Slug:</label>{{category.slug}}</div>
+    <div><label>Color:</label>{{category.color}}</div>
+  </div>
+  <div class="card_footer">
+    <div class="card_footer_item" (click)="onDelete(category)">
+      <label class="delete">削除</label>
+    </div>
+  </div>
+</div>
+<div class="todo_footer">
+  <div class="todo_footer_item">
+    <a routerLink="/"  routerLinkActive="current"
+       style="text-decoration: none;">
+      <label>Todo一覧へ</label>
+    </a>
+  </div>
+</div>
+<div id="category_upd" *ngIf="selectedCategory">
+  <app-category-upd></app-category-upd>
+</div>

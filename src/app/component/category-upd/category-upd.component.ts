@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./category-upd.component.css']
 })
 export class CategoryUpdComponent implements OnInit {
+  headTitle = 'カテゴリー更新';
 
   constructor() { }
 
