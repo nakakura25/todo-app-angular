@@ -13,20 +13,22 @@ import { Observable } from 'rxjs';
 export class TodoListComponent implements OnInit {
   todos: Todo[] = [];
   colorMap: Map<number, string> = new Map<number, string>();
-  colors: Color[] = [];
   selectedTodo?: Todo;
 
   constructor(private todoService: TodoService,) { }
 
   ngOnInit(): void {
+    this.showTodoList();
+  }
+
+  showTodoList() {
     this.todoService.getTodoList()
       .subscribe(
       (response: TodoListResponse) => {
         console.log(response);
         this.todos  = response["todos"];
-        this.colors = response["color"]
-        this.colors.map((res: Color) => {
-          this.colorMap.set(res['id'], res['color'])
+        response["color"].map((res: Color) => {
+          this.colorMap.set(res['id'], res['color']);
         });
       },
       error => {
@@ -44,7 +46,7 @@ export class TodoListComponent implements OnInit {
     console.log(todo);
     this.todoService.deleteTodo(todo.id).subscribe(
       response => {
-        console.log('test');
+        this.showTodoList();
       },
       error => {
         console.log(error);

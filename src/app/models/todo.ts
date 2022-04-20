@@ -18,8 +18,8 @@ export interface FormTodo {
 }
 
 export interface TodoListResponse {
-  'todos': Array<Todo>;
-  'color': Array<Color>;
+  'todos': Todo[];
+  'color': Color[];
 }
 
 export interface Color {
