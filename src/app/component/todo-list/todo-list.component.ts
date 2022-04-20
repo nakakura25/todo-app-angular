@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { TodoService } from  '../../service/todo.service'
-
 import { Todo, TodoListResponse } from '../../models/Todo'
 import { Color } from '../../models/Color'
 import { Status } from '../../models/Status'
 import { Category } from '../../models/Category'
 
 import { Observable } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-todo-list',
@@ -22,7 +23,9 @@ export class TodoListComponent implements OnInit {
   categoryOptions: Category[] = [];
   selectedTodo?: Todo;
 
-  constructor(private todoService: TodoService,) { }
+  constructor(private todoService: TodoService,
+    private router: Router,
+    private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.showTodoList();
@@ -48,6 +51,7 @@ export class TodoListComponent implements OnInit {
 
   onSelect(todo: Todo) {
     this.selectedTodo = todo;
+    this.router.navigate(['/'], { fragment: '' })
   }
 
   onDelete(todo: Todo) {
@@ -56,6 +60,7 @@ export class TodoListComponent implements OnInit {
       response => {
         this.selectedTodo = undefined;
         this.showTodoList();
+        this.toastr.success(`delete todo ${todo.title}`, 'DELETE');
       },
       error => {
         console.log(error);
@@ -64,6 +69,7 @@ export class TodoListComponent implements OnInit {
   }
 
   onUpdate(todo: Todo) {
+    this.toastr.success(`update todo ${todo.title}`, 'UPDATE');
     this.showTodoList();
   }
 }

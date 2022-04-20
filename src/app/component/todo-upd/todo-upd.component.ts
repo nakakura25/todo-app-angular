@@ -1,5 +1,6 @@
 import { Component, OnChanges, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
+import { Router } from '@angular/router';
 
 import { TodoService } from  '../../service/todo.service'
 import { Todo, FormTodo } from '../../models/Todo'
@@ -20,7 +21,8 @@ export class TodoUpdComponent implements OnChanges {
   headTitle = 'Todo更新';
 
   constructor(private builder: FormBuilder,
-  private todoService: TodoService) { }
+    private todoService: TodoService,
+    private router: Router,) { }
 
   ngOnChanges(): void {
     if (this.todo) {
@@ -30,6 +32,7 @@ export class TodoUpdComponent implements OnChanges {
         category: this.todo?.categoryId,
         state:    this.todo?.state
       })
+      this.router.navigate(['/'], { fragment: 'todo_upd' })
     }
   }
 
@@ -60,6 +63,7 @@ export class TodoUpdComponent implements OnChanges {
     this.todoService.updateTodo(todo).subscribe(
       response => {
         this.edited.emit(this.todo);
+        this.reset();
       },
       error => {
         console.log(error);
@@ -69,5 +73,6 @@ export class TodoUpdComponent implements OnChanges {
 
   reset() {
     this.todo = undefined;
+    this.router.navigate(['/'], { fragment: '' })
   }
 }
