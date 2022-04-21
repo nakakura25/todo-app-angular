@@ -23,13 +23,6 @@ describe('AppComponent', () => {
   it(`should have as title 'todo-app-angular'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('todo-app-angular');
-  });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('todo-app-angular app is running!');
+    expect(app.title).toEqual('Todoアプリ');
   });
 });

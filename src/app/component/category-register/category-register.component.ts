@@ -24,10 +24,10 @@ export class CategoryRegisterComponent implements OnInit {
 
   ngOnInit(): void {
     this.colorOptions = this.categoryService.getColorOptions();
-    this.colorOptions.map((res: Color) => {
+    this.colorOptions?.map((res: Color) => {
       this.colorMap.set(res['id'], res['color']);
     });
-    this.color.setValue(this.colorOptions[0]?.id);
+    this.color.setValue(this.colorOptions ? this.colorOptions[0]?.id : 0);
     this.selectedValue = Number(this.color.value);
   }
 
