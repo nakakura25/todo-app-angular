@@ -1,0 +1,25 @@
+.header {
+  height:            70px;
+  background-color:  #24292F;
+  width:             100%;
+}
+
+.header .header__content {
+  width:      1080px;
+  margin:     auto;
+}
+
+.header .header__logo {
+  color:             white;
+  line-height:       70px;
+  font-size:         20px;
+  font-weight:       bold;
+}
+
+.main {
+  width:      980px;
+  margin:     100px auto;
+  padding:    100px;
+  box-shadow: 0 0 4px gray;
+  position:   relative;
+}

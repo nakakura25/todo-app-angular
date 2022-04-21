@@ -1,0 +1,38 @@
+<div *ngIf="todo" >
+  <h1>{{headTitle}}</h1>
+  <form [formGroup]="todoForm" (ngSubmit)="update()">
+    <div>
+      <label for="title">Title：</label><br/>
+      <input id="title" name="title" type="text" [formControl]="title" size="40" />
+      <span *ngIf="title.errors?.['required']">Titleは必須です。</span>
+    </div>
+    <div>
+      <label for="body">Body：</label><br/>
+      <textarea id="body" name="body" rows="3" cols="40" [formControl]="body"></textarea>
+      <span *ngIf="body.errors?.['required']">Bodyは必須です。</span>
+    </div>
+    <div>
+      <label for="category">Category：</label><br/>
+      <select id="category" name="category" [formControl]="category">
+        <option *ngFor="let categoryOpt of categoryOptions" value="{{categoryOpt.id}}">
+          {{categoryOpt.name}}
+        </option>
+      </select>
+    </div>
+    <div>
+      <label for="state">Status：</label><br/>
+      <select id="state" name="state" [formControl]="state">
+        <option *ngFor="let stateOpt of stateOptions" value="{{stateOpt.code}}">{{stateOpt.name}}</option>
+      </select>
+    </div>
+    <div class="button-area">
+      <div class="form-button">
+        <input type="button" value="リセット" (click)="reset()" />
+      </div>
+      <div class="form-button">
+        <input type="submit" value="送信" [disabled]="todoForm.invalid" />
+      </div>
+    </div>
+  </form>
+</div>
+

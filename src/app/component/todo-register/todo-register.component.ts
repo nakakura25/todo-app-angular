@@ -1,0 +1,65 @@
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
+import { Router, Params } from '@angular/router';
+
+import { TodoService } from  '../../service/todo.service'
+
+import { Todo, FormTodo } from '../../models/Todo'
+import { Category } from '../../models/Category'
+
+@Component({
+  selector: 'app-todo-register',
+  templateUrl: './todo-register.component.html',
+  styleUrls: ['./todo-register.component.css']
+})
+export class TodoRegisterComponent implements OnInit {
+  headTitle = 'Todo登録'
+  categoryOptions: Category[] = [];
+
+  constructor(private builder: FormBuilder,
+    private todoService: TodoService,
+    private route: Router,) { }
+
+  ngOnInit(): void {
+    this.categoryOptions = this.todoService.getCategoryOptions();
+    this.category.setValue(this.categoryOptions[0]?.id);
+  }
+
+  title = new FormControl('', [
+    Validators.required
+  ]);
+  body = new FormControl('', [
+    Validators.required
+  ]);
+  category = new FormControl('', [
+    Validators.required
+  ]);
+
+  todoForm = this.builder.group({
+    title:    this.title,
+    body:     this.body,
+    category: this.category,
+  });
+
+  register() {
+    const todo: FormTodo = {
+      id:            0,
+      categoryId:    Number(this.category.value),
+      title:         this.title.value,
+      body:          this.body.value,
+      state:         0
+    }
+    this.todoService.registerTodo(todo).subscribe(
+      response => {
+        this.route.navigate(['/']);
+      },
+      error => {
+        console.log(error);
+      }
+    )
+  }
+
+  back() {
+    this.route.navigate(['/']);
+  }
+}
