@@ -55,6 +55,21 @@ export class CategoryUpdComponent implements OnChanges {
   });
 
   update() {
+    const category: Category = {
+      id:    Number(this.category?.id),
+      name:  this.name.value,
+      slug:  this.slug.value,
+      color: Number(this.color.value)
+    }
+    this.categoryService.updateCategory(category).subscribe(
+      response => {
+        this.edited.emit(this.category);
+        this.reset();
+      },
+      error => {
+        console.log(error);
+      }
+    )
   }
 
   colorChange(color: FormControl) {

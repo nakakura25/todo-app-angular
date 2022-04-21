@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  apiUrlTodo: 'http://localhost:9000/api/'
 };

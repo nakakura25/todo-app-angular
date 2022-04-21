@@ -55,7 +55,6 @@ export class TodoListComponent implements OnInit {
   }
 
   onDelete(todo: Todo) {
-    console.log(todo);
     this.todoService.deleteTodo(todo.id).subscribe(
       response => {
         this.selectedTodo = undefined;

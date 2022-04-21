@@ -6,6 +6,9 @@ import { CategoryService } from  '../../service/category.service'
 import { Category, CategoryListResponse } from '../../models/Category'
 import { Color } from '../../models/Color'
 
+import { Observable } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+
 @Component({
   selector: 'app-category-list',
   templateUrl: './category-list.component.html',
@@ -19,7 +22,8 @@ export class CategoryListComponent implements OnInit {
   selectedCategory?: Category;
 
   constructor(private categoryService: CategoryService,
-    private router: Router) { }
+    private router: Router,
+    private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.showCategoryList();
@@ -47,11 +51,20 @@ export class CategoryListComponent implements OnInit {
   }
 
   onDelete(category: Category) {
-    console.log('onDelete');
-    this.selectedCategory;
+    this.categoryService.deleteCategory(category.id).subscribe(
+      response => {
+        this.selectedCategory = undefined;
+        this.showCategoryList();
+        this.toastr.success(`delete category ${category.name}`, 'DELETE');
+      },
+      error => {
+        console.log(error);
+      }
+    )
   }
 
   onUpdate(category: Category) {
-    console.log('onUpdate');
+    this.toastr.success(`update category ${category.name}`, 'UPDATE');
+    this.showCategoryList();
   }
 }

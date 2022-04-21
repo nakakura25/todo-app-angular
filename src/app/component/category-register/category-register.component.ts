@@ -4,6 +4,7 @@ import { Router, Params } from '@angular/router';
 
 import { CategoryService } from  '../../service/category.service'
 
+import { Category } from '../../models/Category'
 import { Color } from '../../models/Color'
 
 @Component({
@@ -52,6 +53,20 @@ export class CategoryRegisterComponent implements OnInit {
   }
 
   register() {
+    const category: Category = {
+      id:    0,
+      name:  this.name.value,
+      slug:  this.slug.value,
+      color: Number(this.color.value)
+    }
+    this.categoryService.registerCategory(category).subscribe(
+      response => {
+        this.route.navigate(['/category']);
+      },
+      error => {
+        console.log(error);
+      }
+    )
   }
 
   back() {
