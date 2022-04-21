@@ -1,1 +1,31 @@
-<p>category-register works!</p>
+<h1>{{headTitle}}</h1>
+<form [formGroup]="categoryForm" (ngSubmit)="register()">
+  <div>
+    <label for="name">Name：</label><br/>
+    <input id="name" name="name" type="text" [formControl]="name" size="40" />
+    <span *ngIf="name.errors?.['required']">Nameは必須です。</span>
+  </div>
+  <div>
+    <label for="slug">Slug：</label><br/>
+    <input id="slug" name="slug" type="text" [formControl]="slug" size="40" />
+    <span *ngIf="slug.errors?.['required']">Slugは必須です。</span>
+    <span *ngIf="slug.errors?.['pattern']">Slugは英数字のみ入力可能です。</span>
+  </div>
+  <div>
+    <label for="color">Color：</label><br/>
+    <select id="color" name="color" [formControl]="color" (change)="colorChange(color)"
+            [style.background-color]="colorMap.get(selectedValue)">
+      <option *ngFor="let colorOpt of colorOptions" value="{{colorOpt.id}}">
+        {{colorOpt.color}}
+      </option>
+    </select>
+  </div>
+  <div class="button-area">
+    <div class="form-button">
+      <input type="button" value="戻る" (click)="back()" />
+    </div>
+    <div class="form-button">
+      <input type="submit" value="送信" [disabled]="categoryForm.invalid" />
+    </div>
+  </div>
+</form>

@@ -31,7 +31,7 @@ export class TodoUpdComponent implements OnChanges {
         body:     this.todo?.body,
         category: this.todo?.categoryId,
         state:    this.todo?.state
-      })
+      });
       this.router.navigate(['/'], { fragment: 'todo_upd' })
     }
   }

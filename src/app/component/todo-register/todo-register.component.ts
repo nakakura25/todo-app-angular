@@ -22,7 +22,7 @@ export class TodoRegisterComponent implements OnInit {
 
   ngOnInit(): void {
     this.categoryOptions = this.todoService.getCategoryOptions();
-    this.category.setValue(this.categoryOptions[0]?.id);
+    this.category.setValue(this.categoryOptions ? this.categoryOptions[0]?.id : 0);
   }
 
   title = new FormControl('', [

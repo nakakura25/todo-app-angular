@@ -3,6 +3,7 @@ import { HttpClient, HttpParams, HttpHeaders, } from '@angular/common/http';
 
 import { Todo, TodoListResponse, FormTodo } from '../models/Todo'
 import { Category } from '../models/Category'
+import { environment } from '../../environments/environment';
 
 import { Observable } from 'rxjs';
 
@@ -14,10 +15,10 @@ export class TodoService {
 
   constructor(private http: HttpClient,) { }
 
-  url = 'http://localhost:9000/api/todo';
+  url = `${environment.apiUrl}/todo`;
 
   getTodoList(): Observable<TodoListResponse> {
-    return this.http.get<TodoListResponse>(this.url)
+    return this.http.get<TodoListResponse>(this.url);
   }
 
   registerTodo(todo: FormTodo): Observable<unknown> {
@@ -27,7 +28,7 @@ export class TodoService {
       title:      todo['title'],
       body:       todo['body'],
       state:      todo['state']
-    })
+    });
   }
 
   updateTodo(todo: FormTodo): Observable<unknown> {
@@ -37,7 +38,7 @@ export class TodoService {
       title:      todo['title'],
       body:       todo['body'],
       state:      todo['state']
-    })
+    });
   }
 
   deleteTodo(id: number): Observable<unknown> {

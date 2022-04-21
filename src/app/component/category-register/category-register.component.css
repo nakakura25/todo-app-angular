@@ -1,0 +1,8 @@
+.button-area {
+  display: flex;
+  padding-top: 8px;
+}
+
+.form-button {
+  padding-right: 8px
+}
