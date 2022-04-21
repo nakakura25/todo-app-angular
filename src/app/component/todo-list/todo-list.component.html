@@ -7,7 +7,7 @@
     </a>
   </div>
 </div>
-<div *ngFor="let todo of todos" class="card">
+<div *ngFor="let todo of todos" class="card" data-cy="card">
   <div (click)="onSelect(todo)"
        class="card_content" [ngStyle]="{'background-color': colorMap.get(todo.color) }">
     <div><label>Title:</label>{{todo.title}}</div>
