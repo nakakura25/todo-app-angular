@@ -1,17 +1,17 @@
-.todo_header {
+.category_header {
   text-align: right;
 }
 
-.todo_header .todo_header_item {
+.category_header .category_header_item {
   display:     inline-block;
   margin-left: 5px;
 }
 
-.todo_footer {
+.category_footer {
   text-align: right;
 }
 
-.todo_footer .todo_footer_item {
+.category_footer .category_footer_item {
   display:     inline-block;
   margin-left: 5px;
 }
