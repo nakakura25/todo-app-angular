@@ -62,9 +62,6 @@ export class CategoryRegisterComponent implements OnInit {
     this.categoryService.registerCategory(category).subscribe(
       response => {
         this.route.navigate(['/category']);
-      },
-      error => {
-        console.log(error);
       }
     )
   }

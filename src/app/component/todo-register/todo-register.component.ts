@@ -52,9 +52,6 @@ export class TodoRegisterComponent implements OnInit {
     this.todoService.registerTodo(todo).subscribe(
       response => {
         this.route.navigate(['/']);
-      },
-      error => {
-        console.log(error);
       }
     )
   }

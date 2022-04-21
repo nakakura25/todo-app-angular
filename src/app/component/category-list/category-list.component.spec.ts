@@ -14,12 +14,12 @@ describe('CategoryListComponent', () => {
   let routerSpy: { navigate: jasmine.Spy };
   let categoryServiceSpy: { getCategoryList: jasmine.Spy,
    setColorOptions: jasmine.Spy, deleteCategory: jasmine.Spy }
-  let toastrSpy: { success: jasmine.Spy };
+  let toastrSpy: { success: jasmine.Spy, error: jasmine.Spy };
 
   beforeEach(async () => {
     routerSpy = jasmine.createSpyObj('Router', ['navigate']);
     categoryServiceSpy = jasmine.createSpyObj('CategoryService', ['getCategoryList', 'setColorOptions', 'deleteCategory']);
-    toastrSpy = jasmine.createSpyObj('ToastrService', ['toastrSpy']);
+    toastrSpy = jasmine.createSpyObj('ToastrService', ['success', 'error']);
     await TestBed.configureTestingModule({
       declarations: [ CategoryListComponent ],
       providers: [

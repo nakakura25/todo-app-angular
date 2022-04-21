@@ -42,9 +42,6 @@ export class TodoListComponent implements OnInit {
         });
         this.categoryOptions = response["category"].filter(cat => cat.id !== 0);
         this.todoService.setCategoryOptions(this.categoryOptions);
-      },
-      error => {
-        console.log(error);
       }
     )
   }
@@ -59,16 +56,21 @@ export class TodoListComponent implements OnInit {
       response => {
         this.selectedTodo = undefined;
         this.showTodoList();
-        this.toastr.success(`delete todo ${todo.title}`, 'DELETE');
-      },
-      error => {
-        console.log(error);
+        if (response === -1) {
+          this.toastr.error(`cause error`, 'DELETE');
+        } else {
+          this.toastr.success(`delete todo ${todo.title}`, 'DELETE');
+        }
       }
     )
   }
 
   onUpdate(todo: Todo) {
-    this.toastr.success(`update todo ${todo.title}`, 'UPDATE');
+    if(todo !== undefined) {
+      this.toastr.success(`update todo ${todo.title}`, 'UPDATE');
+    } else {
+      this.toastr.error(`cause error`, 'UPDATE');
+    }
     this.showTodoList();
   }
 }

@@ -14,12 +14,12 @@ describe('TodoListComponent', () => {
   let routerSpy: { navigate: jasmine.Spy };
   let todoServiceSpy: { getTodoList: jasmine.Spy,
    setCategoryOptions: jasmine.Spy, deleteTodo: jasmine.Spy  };
-  let toastrSpy: { success: jasmine.Spy };
+  let toastrSpy: { success: jasmine.Spy, error: jasmine.Spy };
 
   beforeEach(async () => {
     routerSpy = jasmine.createSpyObj('Router', ['navigate']);
     todoServiceSpy = jasmine.createSpyObj('TodoService', ['getTodoList', 'setCategoryOptions', 'deleteTodo']);
-    toastrSpy = jasmine.createSpyObj('ToastrService', ['toastrSpy']);
+    toastrSpy = jasmine.createSpyObj('ToastrService', ['success', 'error']);
     await TestBed.configureTestingModule({
       declarations: [ TodoListComponent ],
       providers: [

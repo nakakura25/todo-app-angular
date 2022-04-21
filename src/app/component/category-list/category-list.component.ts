@@ -38,9 +38,6 @@ export class CategoryListComponent implements OnInit {
           this.colorMap.set(res['id'], res['color']);
         });
         this.categoryService.setColorOptions(this.colorOptions);
-      },
-      error => {
-        console.log(error);
       }
     )
   }
@@ -55,16 +52,21 @@ export class CategoryListComponent implements OnInit {
       response => {
         this.selectedCategory = undefined;
         this.showCategoryList();
-        this.toastr.success(`delete category ${category.name}`, 'DELETE');
-      },
-      error => {
-        console.log(error);
+        if (response === -1) {
+          this.toastr.error(`cause error`, 'DELETE');
+        } else {
+          this.toastr.success(`delete category ${category.name}`, 'DELETE');
+        }
       }
     )
   }
 
   onUpdate(category: Category) {
-    this.toastr.success(`update category ${category.name}`, 'UPDATE');
+    if(category !== undefined) {
+      this.toastr.success(`update category ${category.name}`, 'UPDATE');
+    } else {
+      this.toastr.error(`cause error`, 'UPDATE');
+    }
     this.showCategoryList();
   }
 }

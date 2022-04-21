@@ -62,11 +62,8 @@ export class TodoUpdComponent implements OnChanges {
     }
     this.todoService.updateTodo(todo).subscribe(
       response => {
-        this.edited.emit(this.todo);
+        this.edited.emit(response !== undefined ? this.todo : undefined);
         this.reset();
-      },
-      error => {
-        console.log(error);
       }
     )
   }

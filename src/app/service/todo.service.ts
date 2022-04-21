@@ -5,7 +5,8 @@ import { Todo, TodoListResponse, FormTodo } from '../models/Todo'
 import { Category } from '../models/Category'
 import { environment } from '../../environments/environment';
 
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,10 @@ export class TodoService {
   url = `${environment.apiUrl}/todo`;
 
   getTodoList(): Observable<TodoListResponse> {
-    return this.http.get<TodoListResponse>(this.url);
+    return this.http.get<TodoListResponse>(this.url)
+      .pipe(
+        catchError(this.handleError<TodoListResponse>('getTodoList', this.empty()))
+      );
   }
 
   registerTodo(todo: FormTodo): Observable<unknown> {
@@ -28,7 +32,9 @@ export class TodoService {
       title:      todo['title'],
       body:       todo['body'],
       state:      todo['state']
-    });
+    }).pipe(
+      catchError(this.handleError<FormTodo>('registerTodo'))
+    )
   }
 
   updateTodo(todo: FormTodo): Observable<unknown> {
@@ -38,11 +44,15 @@ export class TodoService {
       title:      todo['title'],
       body:       todo['body'],
       state:      todo['state']
-    });
+    }).pipe(
+      catchError(this.handleError<Todo>('updateTodo'))
+    )
   }
 
   deleteTodo(id: number): Observable<unknown> {
-    return this.http.delete(`${this.url}/${id}`);
+    return this.http.delete(`${this.url}/${id}`).pipe(
+      catchError(this.handleError<number>('deleteTodo', -1))
+    )
   }
 
   setCategoryOptions(category: Category[]) {
@@ -53,4 +63,21 @@ export class TodoService {
     return this.categoryOptions;
   }
 
+  private empty(): TodoListResponse {
+    const empty: TodoListResponse = {
+      todos: [],
+      color: [],
+      category: [],
+      status: [],
+    }
+    return empty;
+  }
+
+  private handleError<T>(operation='operation', result?: T) {
+    return (error: any): Observable<T> => {
+      console.error(`${operation} failed ${error.message}`);
+      console.error(error);
+      return of(result as T);
+    }
+  }
 }
