@@ -1,9 +1,12 @@
-import { Component, OnChanges, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 
 import { TodoService } from  '../../service/todo.service'
-import { Todo, FormTodo } from '../../models/Todo'
+import { CategoryService } from  '../../service/category.service'
+import { StateService } from  '../../service/state.service'
+
+import { Todo } from '../../models/Todo'
 import { Status } from '../../models/Status'
 import { Category } from '../../models/Category'
 
@@ -12,17 +15,24 @@ import { Category } from '../../models/Category'
   templateUrl: './todo-upd.component.html',
   styleUrls: ['./todo-upd.component.css']
 })
-export class TodoUpdComponent implements OnChanges {
+export class TodoUpdComponent implements OnInit, OnChanges {
   @Input('todo') todo?: Todo;
-  @Input('stateOptions') stateOptions?: Status[];
-  @Input('categoryOptions') categoryOptions?: Category[];
   @Output('upd') edited = new EventEmitter<Todo>();
 
   headTitle = 'Todo更新';
+  stateOptions: Status[] = [];
+  categoryOptions: Category[] = [];
 
   constructor(private builder: FormBuilder,
     private todoService: TodoService,
+    private categoryService: CategoryService,
+    private stateService: StateService,
     private router: Router,) { }
+
+  ngOnInit(): void {
+    this.stateOptions = this.stateService.getStatusOptions();
+    this.categoryOptions = this.categoryService.getCategoryOptions();
+  }
 
   ngOnChanges(): void {
     if (this.todo) {
@@ -42,7 +52,9 @@ export class TodoUpdComponent implements OnChanges {
   body = new FormControl(this.todo?.body, [
     Validators.required
   ]);
-  category = new FormControl(this.todo?.categoryId);
+  category = new FormControl(this.todo?.categoryId, [
+    Validators.pattern('[1-9]+')
+  ]);
   state = new FormControl(this.todo?.state);
 
   todoForm = this.builder.group({
@@ -53,7 +65,7 @@ export class TodoUpdComponent implements OnChanges {
   });
 
   update() {
-    const todo: FormTodo = {
+    const todo: Todo = {
       id:            Number(this.todo?.id),
       categoryId:    Number(this.category.value),
       title:         this.title.value,
@@ -62,11 +74,8 @@ export class TodoUpdComponent implements OnChanges {
     }
     this.todoService.updateTodo(todo).subscribe(
       response => {
-        this.edited.emit(this.todo);
+        this.edited.emit(response !== undefined ? this.todo : undefined);
         this.reset();
-      },
-      error => {
-        console.log(error);
       }
     )
   }

@@ -1,24 +1,29 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders, } from '@angular/common/http';
 
-import { Category, CategoryListResponse } from '../models/Category'
+import { Category } from '../models/Category'
 import { Color } from '../models/Color'
 import { environment } from '../../environments/environment';
+import { HttpErrorService } from './http-error.service'
 
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CategoryService {
-  colorOptions: Color[] = [];
+  categoryOptions: Category[] = [];
 
-  constructor(private http: HttpClient,) { }
+  constructor(private http: HttpClient,
+  private httpErrorService: HttpErrorService,) { }
 
   url = `${environment.apiUrl}/category`;
 
-  getCategoryList(): Observable<CategoryListResponse> {
-    return this.http.get<CategoryListResponse>(this.url);
+  getCategoryList(): Observable<Category[]> {
+    return this.http.get<Category[]>(this.url).pipe(
+      catchError(this.httpErrorService.handleError<Category[]>('getCategoryList', []))
+    )
   }
 
   registerCategory(category: Category) {
@@ -27,7 +32,9 @@ export class CategoryService {
       name:  category['name'],
       slug:  category['slug'],
       color: category['color']
-    });
+    }).pipe(
+      catchError(this.httpErrorService.handleError<Category>('registerCategory'))
+    )
   }
 
   updateCategory(category: Category) {
@@ -36,19 +43,22 @@ export class CategoryService {
       name:  category['name'],
       slug:  category['slug'],
       color: category['color']
-    });
+    }).pipe(
+      catchError(this.httpErrorService.handleError<Category>('updateCategory'))
+    )
   }
 
   deleteCategory(id: number) {
-    return this.http.delete(`${this.url}/${id}`);
+    return this.http.delete(`${this.url}/${id}`).pipe(
+      catchError(this.httpErrorService.handleError<number>('deleteCategory', -1))
+    )
   }
 
-  setColorOptions(colors: Color[]) {
-    this.colorOptions = colors;
+  setCategoryOptions(category: Category[]): void {
+    this.categoryOptions = category;
   }
 
-  getColorOptions(): Color[] {
-    return this.colorOptions;
+  getCategoryOptions(): Category[] {
+    return this.categoryOptions;
   }
-
 }

@@ -7,13 +7,15 @@
     </a>
   </div>
 </div>
-<div *ngFor="let todo of todos" class="card">
+<div *ngFor="let todo of todos" class="card" data-cy="card">
   <div (click)="onSelect(todo)"
-       class="card_content" [ngStyle]="{'background-color': colorMap.get(todo.color) }">
+       class="card_content"
+       [ngStyle]="{'background-color': categoryMap.has(todo.categoryId) ?
+        colorMap?.get(categoryMap.get(todo.categoryId)!.color) : '' }">
     <div><label>Title:</label>{{todo.title}}</div>
     <div class="body"><label>Body:</label>{{todo.body}}</div>
-    <div><label>Status:</label>{{todo.stateName}}</div>
-    <div><label>Category:</label>{{todo.categoryName}}</div>
+    <div><label>Status:</label>{{stateMap.get(todo.state)}}</div>
+    <div><label>Category:</label>{{categoryMap.has(todo.categoryId) ? categoryMap.get(todo.categoryId)?.name : 'None'}}</div>
   </div>
   <div class="card_footer">
     <div class="card_footer_item" (click)="onDelete(todo)">
@@ -30,6 +32,6 @@
   </div>
 </div>
 <div id="todo_upd" *ngIf="selectedTodo">
-  <app-todo-upd [todo]="selectedTodo" [stateOptions]="stateOptions"
-                [categoryOptions]="categoryOptions" (upd)="onUpdate($event)"></app-todo-upd>
+  <app-todo-upd [todo]="selectedTodo"
+                (upd)="onUpdate($event)"></app-todo-upd>
 </div>

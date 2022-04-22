@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 
 import { CategoryRegisterComponent } from './category-register.component';
 import { CategoryService } from  '../../service/category.service'
+import { ColorService } from  '../../service/color.service'
 
 describe('CategoryRegisterComponent', () => {
   let component: CategoryRegisterComponent;
@@ -12,11 +13,13 @@ describe('CategoryRegisterComponent', () => {
 
   let routerSpy: { navigate: jasmine.Spy };
   let categoryServiceSpy: { registerCategory: jasmine.Spy, getColorOptions: jasmine.Spy }
+  let colorServiceSpy: { getColorOptions: jasmine.Spy }
 
 
   beforeEach(async () => {
     routerSpy = jasmine.createSpyObj('Router', ['navigate']);
     categoryServiceSpy = jasmine.createSpyObj('CategoryService', ['registerCategory', 'getColorOptions']);
+    colorServiceSpy = jasmine.createSpyObj('ColorService', ['getColorOptions']);
     await TestBed.configureTestingModule({
       declarations: [ CategoryRegisterComponent ],
       imports: [
@@ -25,6 +28,7 @@ describe('CategoryRegisterComponent', () => {
       providers: [
         { provide: Router, useValue: routerSpy },
         { provide: CategoryService, useValue: categoryServiceSpy },
+        { provide: ColorService, useValue: colorServiceSpy },
       ]
     })
     .compileComponents();

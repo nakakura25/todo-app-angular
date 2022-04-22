@@ -32,7 +32,6 @@
 </div>
 <div id="category_upd" *ngIf="selectedCategory">
   <app-category-upd [category]="selectedCategory"
-                    [colorOptions]="colorOptions"
                     [colorMap]="colorMap"
                     (upd)="onUpdate($event)">
   </app-category-upd>

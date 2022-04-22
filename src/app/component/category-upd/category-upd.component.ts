@@ -1,8 +1,9 @@
-import { Component, OnChanges, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 import { Router, Params } from '@angular/router';
 
 import { CategoryService } from  '../../service/category.service'
+import { ColorService } from  '../../service/color.service'
 
 import { Category } from '../../models/Category'
 import { Color } from '../../models/Color'
@@ -12,18 +13,23 @@ import { Color } from '../../models/Color'
   templateUrl: './category-upd.component.html',
   styleUrls: ['./category-upd.component.css']
 })
-export class CategoryUpdComponent implements OnChanges {
+export class CategoryUpdComponent implements OnInit, OnChanges {
   @Input('category') category?: Category;
-  @Input('colorOptions') colorOptions?: Color[];
   @Input('colorMap') colorMap?: Map<number, string>;
   @Output('upd') edited = new EventEmitter<Category>();
 
   headTitle = 'カテゴリー更新';
   selectedValue = 0;
+  colorOptions: Color[] = [];
 
   constructor(private builder: FormBuilder,
     private categoryService: CategoryService,
+    private colorService: ColorService,
     private router: Router,) { }
+
+  ngOnInit(): void {
+    this.colorOptions = this.colorService.getColorOptions();
+  }
 
   ngOnChanges(): void {
     if (this.category) {
@@ -63,11 +69,8 @@ export class CategoryUpdComponent implements OnChanges {
     }
     this.categoryService.updateCategory(category).subscribe(
       response => {
-        this.edited.emit(this.category);
+        this.edited.emit(response !== undefined ? this.category : undefined);
         this.reset();
-      },
-      error => {
-        console.log(error);
       }
     )
   }
