@@ -41,7 +41,7 @@ export class CategoryListComponent implements OnInit {
   }
 
   getColor() {
-    this.colorService.getColorMap().subscribe(
+    this.colorService.getColor().subscribe(
       (response: Color[]) => {
         this.colorService.setColorOptions(response)
         response?.map((res: Color) => {

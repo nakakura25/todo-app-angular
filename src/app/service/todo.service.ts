@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders, } from '@angular/common/http';
 
-import { Todo, TodoListResponse, FormTodo } from '../models/Todo'
-import { Category } from '../models/Category'
+import { Todo } from '../models/Todo'
 import { environment } from '../../environments/environment';
+import { HttpErrorService } from './http-error.service'
 
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
@@ -12,20 +12,20 @@ import { catchError, map, tap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class TodoService {
-  categoryOptions: Category[] = [];
 
-  constructor(private http: HttpClient,) { }
+  constructor(private http: HttpClient,
+    private httpErrorService: HttpErrorService,) { }
 
   url = `${environment.apiUrl}/todo`;
 
-  getTodoList(): Observable<TodoListResponse> {
-    return this.http.get<TodoListResponse>(this.url)
+  getTodoList(): Observable<Todo[]> {
+    return this.http.get<Todo[]>(this.url)
       .pipe(
-        catchError(this.handleError<TodoListResponse>('getTodoList', this.empty()))
+        catchError(this.httpErrorService.handleError<Todo[]>('getTodoList', []))
       );
   }
 
-  registerTodo(todo: FormTodo): Observable<unknown> {
+  registerTodo(todo: Todo): Observable<unknown> {
     return this.http.post(this.url, {
       id:         0,
       categoryId: todo['categoryId'],
@@ -33,11 +33,11 @@ export class TodoService {
       body:       todo['body'],
       state:      todo['state']
     }).pipe(
-      catchError(this.handleError<FormTodo>('registerTodo'))
+      catchError(this.httpErrorService.handleError<Todo>('registerTodo'))
     )
   }
 
-  updateTodo(todo: FormTodo): Observable<unknown> {
+  updateTodo(todo: Todo): Observable<unknown> {
     return this.http.put(this.url, {
       id:         todo['id'],
       categoryId: todo['categoryId'],
@@ -45,39 +45,13 @@ export class TodoService {
       body:       todo['body'],
       state:      todo['state']
     }).pipe(
-      catchError(this.handleError<Todo>('updateTodo'))
+      catchError(this.httpErrorService.handleError<Todo>('updateTodo'))
     )
   }
 
   deleteTodo(id: number): Observable<unknown> {
     return this.http.delete(`${this.url}/${id}`).pipe(
-      catchError(this.handleError<number>('deleteTodo', -1))
+      catchError(this.httpErrorService.handleError<number>('deleteTodo', -1))
     )
-  }
-
-  setCategoryOptions(category: Category[]) {
-    this.categoryOptions = category;
-  }
-
-  getCategoryOptions(): Category[] {
-    return this.categoryOptions;
-  }
-
-  private empty(): TodoListResponse {
-    const empty: TodoListResponse = {
-      todos: [],
-      color: [],
-      category: [],
-      status: [],
-    }
-    return empty;
-  }
-
-  private handleError<T>(operation='operation', result?: T) {
-    return (error: any): Observable<T> => {
-      console.error(`${operation} failed ${error.message}`);
-      console.error(error);
-      return of(result as T);
-    }
   }
 }

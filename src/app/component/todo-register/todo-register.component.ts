@@ -3,8 +3,9 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 import { Router, Params } from '@angular/router';
 
 import { TodoService } from  '../../service/todo.service'
+import { CategoryService } from  '../../service/category.service'
 
-import { Todo, FormTodo } from '../../models/Todo'
+import { Todo } from '../../models/Todo'
 import { Category } from '../../models/Category'
 
 @Component({
@@ -18,10 +19,11 @@ export class TodoRegisterComponent implements OnInit {
 
   constructor(private builder: FormBuilder,
     private todoService: TodoService,
+    private categoryService: CategoryService,
     private route: Router,) { }
 
   ngOnInit(): void {
-    this.categoryOptions = this.todoService.getCategoryOptions();
+    this.categoryOptions = this.categoryService.getCategoryOptions();
     this.category.setValue(this.categoryOptions ? this.categoryOptions[0]?.id : 0);
   }
 
@@ -42,7 +44,7 @@ export class TodoRegisterComponent implements OnInit {
   });
 
   register() {
-    const todo: FormTodo = {
+    const todo: Todo = {
       id:            0,
       categoryId:    Number(this.category.value),
       title:         this.title.value,

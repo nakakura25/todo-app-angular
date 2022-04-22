@@ -13,16 +13,15 @@ import { catchError, map, tap } from 'rxjs/operators';
 })
 export class ColorService {
   colorOptions: Color[] = [];
-  colorMap: Map<number, string> = new Map<number, string>();
 
   constructor(private http: HttpClient,
-  private httpErrorService: HttpErrorService,) { }
+    private httpErrorService: HttpErrorService,) { }
 
   url = `${environment.apiUrl}/color`;
 
-  getColorMap(): Observable<Color[]> {
+  getColor(): Observable<Color[]> {
     return this.http.get<Color[]>(this.url).pipe(
-      catchError(this.httpErrorService.handleError<Color[]>('getColorMap', []))
+      catchError(this.httpErrorService.handleError<Color[]>('getColor', []))
     )
   }
 

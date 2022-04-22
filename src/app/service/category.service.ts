@@ -13,6 +13,7 @@ import { catchError, map, tap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class CategoryService {
+  categoryOptions: Category[] = [];
 
   constructor(private http: HttpClient,
   private httpErrorService: HttpErrorService,) { }
@@ -51,5 +52,13 @@ export class CategoryService {
     return this.http.delete(`${this.url}/${id}`).pipe(
       catchError(this.httpErrorService.handleError<number>('deleteCategory', -1))
     )
+  }
+
+  setCategoryOptions(category: Category[]): void {
+    this.categoryOptions = category;
+  }
+
+  getCategoryOptions(): Category[] {
+    return this.categoryOptions;
   }
 }
