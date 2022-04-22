@@ -3,7 +3,7 @@ import { HttpClient, HttpParams, HttpHeaders, } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 import { TodoService } from './todo.service';
-import { Todo, TodoListResponse, FormTodo } from '../models/Todo'
+import { Todo } from '../models/Todo'
 import { environment } from '../../environments/environment';
 
 import { Observable, of } from 'rxjs';
@@ -39,30 +39,11 @@ describe('TodoServiceService', () => {
     httpTestingController.verify();
   });
 
-  const todoListResponseMock: TodoListResponse = {
-    'todos': [{
-      id: 1,
-      categoryId: 3,
-      title: 'testTitle',
-      body: 'testBody',
-      state: 0,
-      stateName: 'TODO',
-      color: 12,
-      categoryName: 'testCategory'
-    }],
-    'color': [{
-      id: 12,
-      color: 'yellow',
-    }],
-    'category': [{
-      id: 3,
-      name: 'testCategory',
-      slug: 'testSlug',
-      color: 1
-    }],
-    'status': [{
-      code: 0,
-      name: 'TODO'
-    }]
-  }
+  const todoListResponseMock: Todo[] = [{
+    id: 1,
+    categoryId: 3,
+    title: 'testTitle',
+    body: 'testBody',
+    state: 0,
+  }];
 });

@@ -11,7 +11,7 @@
   <div (click)="onSelect(todo)"
        class="card_content"
        [ngStyle]="{'background-color': categoryMap.has(todo.categoryId) ?
-        colorMap?.get(categoryMap.get(todo.categoryId)!.color) : '0' }">
+        colorMap?.get(categoryMap.get(todo.categoryId)!.color) : '' }">
     <div><label>Title:</label>{{todo.title}}</div>
     <div class="body"><label>Body:</label>{{todo.body}}</div>
     <div><label>Status:</label>{{stateMap.get(todo.state)}}</div>
