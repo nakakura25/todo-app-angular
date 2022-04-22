@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 
 import { TodoRegisterComponent } from './todo-register.component';
 import { TodoService } from  '../../service/todo.service'
+import { CategoryService } from  '../../service/category.service'
 
 
 describe('TodoRegisterComponent', () => {
@@ -12,10 +13,12 @@ describe('TodoRegisterComponent', () => {
 
   let routerSpy: { navigate: jasmine.Spy };
   let todoServiceSpy: { registerTodo: jasmine.Spy, getCategoryOptions: jasmine.Spy };
+  let categoryServiceSpy: { getCategoryList: jasmine.Spy, setCategoryOptions: jasmine.Spy }
 
   beforeEach(async () => {
     routerSpy = jasmine.createSpyObj('Router', ['navigate']);
     todoServiceSpy = jasmine.createSpyObj('TodoService', ['registerTodo', 'getCategoryOptions']);
+    categoryServiceSpy = jasmine.createSpyObj('CategoryService', ['getCategoryOptions']);
     await TestBed.configureTestingModule({
       declarations: [ TodoRegisterComponent ],
       imports: [
@@ -24,6 +27,7 @@ describe('TodoRegisterComponent', () => {
       providers: [
         { provide: Router, useValue: routerSpy },
         { provide: TodoService, useValue: todoServiceSpy },
+        { provide: CategoryService, useValue: categoryServiceSpy },
       ]
     })
     .compileComponents();
