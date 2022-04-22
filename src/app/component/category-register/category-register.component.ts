@@ -3,6 +3,7 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 import { Router, Params } from '@angular/router';
 
 import { CategoryService } from  '../../service/category.service'
+import { ColorService } from  '../../service/color.service'
 
 import { Category } from '../../models/Category'
 import { Color } from '../../models/Color'
@@ -20,10 +21,11 @@ export class CategoryRegisterComponent implements OnInit {
 
   constructor(private builder: FormBuilder,
     private categoryService: CategoryService,
+    private colorService: ColorService,
     private route: Router,) { }
 
   ngOnInit(): void {
-    this.colorOptions = this.categoryService.getColorOptions();
+    this.colorOptions = this.colorService.getColorOptions();
     this.colorOptions?.map((res: Color) => {
       this.colorMap.set(res['id'], res['color']);
     });

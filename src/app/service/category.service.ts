@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders, } from '@angular/common/http';
 
-import { Category, CategoryListResponse } from '../models/Category'
+import { Category } from '../models/Category'
 import { Color } from '../models/Color'
 import { environment } from '../../environments/environment';
+import { HttpErrorService } from './http-error.service'
 
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
@@ -12,15 +13,15 @@ import { catchError, map, tap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class CategoryService {
-  colorOptions: Color[] = [];
 
-  constructor(private http: HttpClient,) { }
+  constructor(private http: HttpClient,
+  private httpErrorService: HttpErrorService,) { }
 
   url = `${environment.apiUrl}/category`;
 
-  getCategoryList(): Observable<CategoryListResponse> {
-    return this.http.get<CategoryListResponse>(this.url).pipe(
-      catchError(this.handleError<CategoryListResponse>('getCategoryList', this.empty()))
+  getCategoryList(): Observable<Category[]> {
+    return this.http.get<Category[]>(this.url).pipe(
+      catchError(this.httpErrorService.handleError<Category[]>('getCategoryList', []))
     )
   }
 
@@ -31,7 +32,7 @@ export class CategoryService {
       slug:  category['slug'],
       color: category['color']
     }).pipe(
-      catchError(this.handleError<Category>('registerCategory'))
+      catchError(this.httpErrorService.handleError<Category>('registerCategory'))
     )
   }
 
@@ -42,37 +43,13 @@ export class CategoryService {
       slug:  category['slug'],
       color: category['color']
     }).pipe(
-      catchError(this.handleError<Category>('updateCategory'))
+      catchError(this.httpErrorService.handleError<Category>('updateCategory'))
     )
   }
 
   deleteCategory(id: number) {
     return this.http.delete(`${this.url}/${id}`).pipe(
-      catchError(this.handleError<number>('deleteCategory', -1))
+      catchError(this.httpErrorService.handleError<number>('deleteCategory', -1))
     )
-  }
-
-  setColorOptions(colors: Color[]) {
-    this.colorOptions = colors;
-  }
-
-  getColorOptions(): Color[] {
-    return this.colorOptions;
-  }
-
-  private empty(): CategoryListResponse {
-    const empty: CategoryListResponse = {
-      category: [],
-      color: [],
-    }
-    return empty;
-  }
-
-  private handleError<T>(operation='operation', result?: T) {
-    return (error: any): Observable<T> => {
-      console.error(`${operation} failed ${error.message}`);
-      console.error(error);
-      return of(result as T);
-    }
   }
 }

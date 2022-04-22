@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router, Params } from '@angular/router';
 
 import { CategoryService } from  '../../service/category.service'
+import { ColorService } from  '../../service/color.service'
 
-import { Category, CategoryListResponse } from '../../models/Category'
+import { Category } from '../../models/Category'
 import { Color } from '../../models/Color'
 
 import { Observable } from 'rxjs';
@@ -17,27 +18,35 @@ import { ToastrService } from 'ngx-toastr';
 export class CategoryListComponent implements OnInit {
   headTitle = 'カテゴリー一覧'
   categories: Category[] = [];
+  colorOptions?: Color[];
   colorMap: Map<number, string> = new Map<number, string>();
-  colorOptions: Color[] = [];
   selectedCategory?: Category;
 
   constructor(private categoryService: CategoryService,
+    private colorService: ColorService,
     private router: Router,
     private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.showCategoryList();
+    this.getColor();
   }
 
   showCategoryList() {
     this.categoryService.getCategoryList().subscribe(
-      (response: CategoryListResponse) => {
-        this.categories = response["category"];
-        this.colorOptions = response["color"];
-        this.colorOptions.map((res: Color) => {
+      (response: Category[]) => {
+        this.categories = response;
+      }
+    )
+  }
+
+  getColor() {
+    this.colorService.getColorMap().subscribe(
+      (response: Color[]) => {
+        this.colorService.setColorOptions(response)
+        response?.map((res: Color) => {
           this.colorMap.set(res['id'], res['color']);
         });
-        this.categoryService.setColorOptions(this.colorOptions);
       }
     )
   }
