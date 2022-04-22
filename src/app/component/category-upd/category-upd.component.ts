@@ -63,11 +63,8 @@ export class CategoryUpdComponent implements OnChanges {
     }
     this.categoryService.updateCategory(category).subscribe(
       response => {
-        this.edited.emit(this.category);
+        this.edited.emit(response !== undefined ? this.category : undefined);
         this.reset();
-      },
-      error => {
-        console.log(error);
       }
     )
   }

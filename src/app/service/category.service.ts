@@ -5,7 +5,8 @@ import { Category, CategoryListResponse } from '../models/Category'
 import { Color } from '../models/Color'
 import { environment } from '../../environments/environment';
 
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,9 @@ export class CategoryService {
   url = `${environment.apiUrl}/category`;
 
   getCategoryList(): Observable<CategoryListResponse> {
-    return this.http.get<CategoryListResponse>(this.url);
+    return this.http.get<CategoryListResponse>(this.url).pipe(
+      catchError(this.handleError<CategoryListResponse>('getCategoryList', this.empty()))
+    )
   }
 
   registerCategory(category: Category) {
@@ -27,7 +30,9 @@ export class CategoryService {
       name:  category['name'],
       slug:  category['slug'],
       color: category['color']
-    });
+    }).pipe(
+      catchError(this.handleError<Category>('registerCategory'))
+    )
   }
 
   updateCategory(category: Category) {
@@ -36,11 +41,15 @@ export class CategoryService {
       name:  category['name'],
       slug:  category['slug'],
       color: category['color']
-    });
+    }).pipe(
+      catchError(this.handleError<Category>('updateCategory'))
+    )
   }
 
   deleteCategory(id: number) {
-    return this.http.delete(`${this.url}/${id}`);
+    return this.http.delete(`${this.url}/${id}`).pipe(
+      catchError(this.handleError<number>('deleteCategory', -1))
+    )
   }
 
   setColorOptions(colors: Color[]) {
@@ -51,4 +60,19 @@ export class CategoryService {
     return this.colorOptions;
   }
 
+  private empty(): CategoryListResponse {
+    const empty: CategoryListResponse = {
+      category: [],
+      color: [],
+    }
+    return empty;
+  }
+
+  private handleError<T>(operation='operation', result?: T) {
+    return (error: any): Observable<T> => {
+      console.error(`${operation} failed ${error.message}`);
+      console.error(error);
+      return of(result as T);
+    }
+  }
 }
