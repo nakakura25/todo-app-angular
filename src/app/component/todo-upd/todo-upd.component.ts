@@ -52,7 +52,9 @@ export class TodoUpdComponent implements OnInit, OnChanges {
   body = new FormControl(this.todo?.body, [
     Validators.required
   ]);
-  category = new FormControl(this.todo?.categoryId);
+  category = new FormControl(this.todo?.categoryId, [
+    Validators.pattern('[1-9]+')
+  ]);
   state = new FormControl(this.todo?.state);
 
   todoForm = this.builder.group({

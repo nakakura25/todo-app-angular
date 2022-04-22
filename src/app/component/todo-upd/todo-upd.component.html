@@ -18,6 +18,7 @@
           {{categoryOpt.name}}
         </option>
       </select>
+      <span *ngIf="category.errors?.['pattern']">Categoryは必須です。</span>
     </div>
     <div>
       <label for="state">Status：</label><br/>
