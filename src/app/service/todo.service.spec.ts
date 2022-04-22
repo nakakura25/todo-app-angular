@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { HttpClient, HttpParams, HttpHeaders, } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 import { TodoService } from './todo.service';
@@ -31,7 +31,7 @@ describe('TodoServiceService', () => {
 
   it('getTodoList status 200 pattern', () => {
     service.getTodoList().subscribe(actual => {
-        expect(actual).toEqual(todoListResponseMock)
+      expect(actual).toEqual(todoListResponseMock)
     })
     const request = httpTestingController.expectOne(url);
     expect(request.request.method).toEqual('GET');
@@ -39,11 +39,63 @@ describe('TodoServiceService', () => {
     httpTestingController.verify();
   });
 
-  const todoListResponseMock: Todo[] = [{
-    id: 1,
-    categoryId: 3,
-    title: 'testTitle',
-    body: 'testBody',
-    state: 0,
-  }];
+  it('getTodoList error status 404 pattern', () => {
+    const errorResponse = {
+      status: 404, statusText: 'Not Found'
+    };
+    service.getTodoList().subscribe(actual => {
+      expect(actual).toEqual([])
+    })
+    const request = httpTestingController.expectOne(url);
+    request.error(new ErrorEvent('http'), errorResponse);
+  });
+
+  it('registerTodo status 200 pattern', () => {
+    service.registerTodo(todoListResponseMock[0]).subscribe(actual => {
+      expect(actual).toEqual(null)
+    })
+    const request = httpTestingController.expectOne(`${url}`);
+    expect(request.request.method).toEqual('POST');
+    request.flush(null);
+    httpTestingController.verify();
+  });
+
+  it('updateTodo status 200 pattern', () => {
+    service.updateTodo(todoListResponseMock[0]).subscribe(actual => {
+      expect(actual).toEqual(null)
+    })
+    const request = httpTestingController.expectOne(`${url}`);
+    expect(request.request.method).toEqual('PUT');
+    request.flush(null);
+    httpTestingController.verify();
+  });
+
+  it('deleteTodo status 200 pattern', () => {
+    const id: number = 1
+    service.deleteTodo(id).subscribe(actual => {
+      expect(actual).toEqual(null)
+    })
+    const request = httpTestingController.expectOne(`${url}/${id}`);
+    expect(request.request.method).toEqual('DELETE');
+    request.flush(null);
+    httpTestingController.verify();
+  });
+
+
+  const todoListResponseMock: Todo[] = [
+    {
+      id: 1,
+      categoryId: 3,
+      title: 'testTitle',
+      body: 'testBody',
+      state: 0,
+    },
+    {
+      id: 2,
+      categoryId: 4,
+      title: 'testTitleB',
+      body: 'testBodyB',
+      state: 1,
+    },
+  ];
 });
