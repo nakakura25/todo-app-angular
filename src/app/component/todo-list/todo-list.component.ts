@@ -102,4 +102,12 @@ export class TodoListComponent implements OnInit {
     }
     this.showTodoList();
   }
+
+  goToRegister() {
+    this.router.navigate(['/todo/store']);
+  }
+
+  goToCategory() {
+    this.router.navigate(['/category']);
+  }
 }
