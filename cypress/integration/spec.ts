@@ -29,10 +29,11 @@ describe('My First Test', () => {
 
   it('Register todo', () => {
     cy.visit('/')
-    cy.wait(1000);
     cy.get("[data-cy='todo_header_item']").click();
+    cy.wait(1000);
     cy.get("#title").siblings("span").contains('Titleは必須です。')
     cy.get("#body").siblings("span").contains('Bodyは必須です。')
+    cy.get("#submitBtn").should('be.disabled')
     cy.get("[id=title]").type('testTitle');
     cy.get("[id=body]").type('testbody');
     cy.get("[id=category]").select('2');

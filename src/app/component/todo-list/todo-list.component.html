@@ -8,7 +8,8 @@
   </div>
 </div>
 <div *ngFor="let todo of todos; index as i" class="card" data-cy="card">
-  <div (click)="onSelect(todo)"
+  <div [attr.data-cy]="'content' + i"
+       (click)="onSelect(todo)"
        class="card_content"
        [ngStyle]="{'background-color': categoryMap.has(todo.categoryId) ?
         colorMap?.get(categoryMap.get(todo.categoryId)!.color) : '' }">
