@@ -213,11 +213,21 @@ describe('TodoListComponent', () => {
     categoryServiceSpy.getCategoryList.and.returnValue(of(categoryMock));
     colorServiceSpy.getColor.and.returnValue(of(colorMock));
     stateServiceSpy.getStatus.and.returnValue(of(statusMock));
-    todoServiceSpy.getTodoList.and.returnValue(of(todosMock));
     component.ngOnInit();
     fixture.detectChanges();
     component.onUpdate(todosMock[0])
     expect(toastrSpy.success).toHaveBeenCalledWith(`update todo ${todosMock[0].title}`, 'UPDATE');
+  }));
+
+  it('onUpdate todos', fakeAsync(() => {
+    todoServiceSpy.getTodoList.and.returnValue(of(todosMock));
+    categoryServiceSpy.getCategoryList.and.returnValue(of(categoryMock));
+    colorServiceSpy.getColor.and.returnValue(of(colorMock));
+    stateServiceSpy.getStatus.and.returnValue(of(statusMock));
+    component.ngOnInit();
+    fixture.detectChanges();
+    component.onUpdate(undefined!)
+    expect(toastrSpy.error).toHaveBeenCalledWith(`cause error`, 'UPDATE');
   }));
 
   it('go to register todos', fakeAsync(() => {
@@ -229,7 +239,7 @@ describe('TodoListComponent', () => {
     component.ngOnInit();
     fixture.detectChanges();
     const todo_header_item = fixture.debugElement.query(By.css('.todo_header_item'));
-    todo_header_item.nativeElement.click();
+    todo_header_item.triggerEventHandler('click', null);
     tick();
     fixture.detectChanges();
     expect(routerSpy.navigate.calls.any()).toBe(true);

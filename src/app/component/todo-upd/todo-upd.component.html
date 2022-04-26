@@ -1,6 +1,6 @@
 <div *ngIf="todo" >
   <h1>{{headTitle}}</h1>
-  <form [formGroup]="todoForm" (ngSubmit)="update()">
+  <form id="form" [formGroup]="todoForm" (ngSubmit)="update()">
     <div>
       <label for="title">Title：</label><br/>
       <input id="title" name="title" type="text" [formControl]="title" size="40" />
@@ -28,10 +28,10 @@
     </div>
     <div class="button-area">
       <div class="form-button">
-        <input type="button" value="リセット" (click)="reset()" />
+        <input id="reset" type="button" value="リセット" (click)="reset()" />
       </div>
       <div class="form-button">
-        <input type="submit" value="送信" [disabled]="todoForm.invalid" />
+        <input id="submit" type="submit" value="送信" [disabled]="todoForm.invalid" />
       </div>
     </div>
   </form>
