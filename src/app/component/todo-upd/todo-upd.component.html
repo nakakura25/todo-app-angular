@@ -1,6 +1,6 @@
 <div *ngIf="todo" >
   <h1>{{headTitle}}</h1>
-  <form id="form" [formGroup]="todoForm" (ngSubmit)="update()">
+  <form id="form" data-cy="upd-form" [formGroup]="todoForm" (ngSubmit)="update()">
     <div>
       <label for="title">Title：</label><br/>
       <input id="title" name="title" type="text" [formControl]="title" size="40" />
