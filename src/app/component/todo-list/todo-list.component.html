@@ -1,21 +1,21 @@
 <h1>{{headTitle}}</h1>
 <div id="top" class="todo_header">
-  <div class="todo_header_item" (click)="goToRegister()">
+  <div class="todo_header_item" data-cy="todo_header_item" (click)="goToRegister()">
     <div  routerLinkActive="current"
        style="text-decoration: none;">
       <label>Todo登録</label>
     </div>
   </div>
 </div>
-<div *ngFor="let todo of todos" class="card" data-cy="card">
+<div *ngFor="let todo of todos; index as i" class="card" data-cy="card">
   <div (click)="onSelect(todo)"
        class="card_content"
        [ngStyle]="{'background-color': categoryMap.has(todo.categoryId) ?
         colorMap?.get(categoryMap.get(todo.categoryId)!.color) : '' }">
-    <div><label>Title:</label>{{todo.title}}</div>
-    <div class="body"><label>Body:</label>{{todo.body}}</div>
-    <div><label>Status:</label>{{stateMap.get(todo.state)}}</div>
-    <div><label>Category:</label>{{categoryMap.has(todo.categoryId) ? categoryMap.get(todo.categoryId)?.name : 'None'}}</div>
+    <div><label>Title:</label><span [attr.data-cy]="'title' + i">{{todo.title}}</span></div>
+    <div class="body"><label>Body:</label><span [attr.data-cy]="'body' + i">{{todo.body}}</span></div>
+    <div><label>Status:</label><span [attr.data-cy]="'status' + i">{{stateMap.get(todo.state)}}</span></div>
+    <div><label>Category:</label><span [attr.data-cy]="'category' + i">{{categoryMap.has(todo.categoryId) ? categoryMap.get(todo.categoryId)?.name : 'None'}}</span></div>
   </div>
   <div class="card_footer">
     <div class="card_footer_item" (click)="onDelete(todo)">
