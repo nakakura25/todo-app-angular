@@ -1,5 +1,5 @@
 <h1>{{headTitle}}</h1>
-<form [formGroup]="todoForm" (ngSubmit)="register()">
+<form id="form" [formGroup]="todoForm" (ngSubmit)="register()">
   <div>
     <label for="title">Title：</label><br/>
     <input id="title" name="title" type="text" [formControl]="title" size="40" />
@@ -20,10 +20,10 @@
   </div>
   <div class="button-area">
     <div class="form-button">
-      <input type="button" value="戻る" (click)="back()" />
+      <input id="reset" type="button" value="戻る" (click)="back()" />
     </div>
     <div class="form-button">
-      <input type="submit" value="送信" [disabled]="todoForm.invalid" />
+      <input id="submitBtn" type="submit" value="送信" [disabled]="todoForm.invalid" />
     </div>
   </div>
 </form>

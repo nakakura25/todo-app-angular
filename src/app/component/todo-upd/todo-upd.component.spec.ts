@@ -12,7 +12,7 @@ import { Todo } from '../../models/Todo'
 import { Status } from '../../models/Status'
 import { Category } from '../../models/Category'
 
-import {By} from '@angular/platform-browser';
+import { By } from '@angular/platform-browser';
 import { Observable, of } from 'rxjs';
 
 describe('TodoUpdComponent', () => {
@@ -53,13 +53,16 @@ describe('TodoUpdComponent', () => {
     stateServiceSpy.getStatusOptions.and.returnValue(statusMock);
     categoryServiceSpy.getCategoryOptions.and.returnValue(categoryMock);
 
-    component.ngOnInit();
     component.ngOnChanges();
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('this.todo undefined', () => {
+    component.todo = undefined;
   });
 
   it('ngOnChanges create', () => {
