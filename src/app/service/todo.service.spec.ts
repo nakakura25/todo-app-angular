@@ -81,6 +81,17 @@ describe('TodoServiceService', () => {
     httpTestingController.verify();
   });
 
+  it('deleteTodo error status 404 pattern', () => {
+    const id: number = 1
+    const errorResponse = {
+      status: 404, statusText: 'Not Found'
+    };
+    service.deleteTodo(id).subscribe(actual => {
+      expect(actual).toEqual(-1)
+    })
+    const request = httpTestingController.expectOne(`${url}/${id}`);
+    request.error(new ErrorEvent('http'), errorResponse);
+  });
 
   const todoListResponseMock: Todo[] = [
     {

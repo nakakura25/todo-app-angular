@@ -37,10 +37,10 @@ export class TodoUpdComponent implements OnInit, OnChanges {
   ngOnChanges(): void {
     if (this.todo) {
       this.todoForm.setValue({
-        title:    this.todo?.title,
-        body:     this.todo?.body,
-        category: this.todo?.categoryId,
-        state:    this.todo?.state
+        title:    this.todo.title,
+        body:     this.todo.body,
+        category: this.todo.categoryId,
+        state:    this.todo.state
       });
       this.router.navigate(['/'], { fragment: 'todo_upd' })
     }

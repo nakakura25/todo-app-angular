@@ -37,6 +37,23 @@ describe('StateService', () => {
     httpTestingController.verify();
   });
 
+  it('getStatus error status 404 pattern', () => {
+    const errorResponse = {
+      status: 404, statusText: 'Not Found'
+    };
+    service.getStatus().subscribe(actual => {
+      expect(actual).toEqual([])
+    })
+    const request = httpTestingController.expectOne(url);
+    request.error(new ErrorEvent('http'), errorResponse);
+  });
+
+  it('setStatusOptions', () => {
+    service.setStatusOptions(statusMock)
+    expect(service.getStatusOptions()).toEqual(statusMock)
+  });
+
+
   const statusMock: Status[] = [
     {
       code: 0,

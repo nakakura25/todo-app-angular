@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders, } from '@angular/common/http';
 
 import { Category } from '../models/Category'
-import { Color } from '../models/Color'
 import { environment } from '../../environments/environment';
 import { HttpErrorService } from './http-error.service'
 
@@ -26,7 +25,7 @@ export class CategoryService {
     )
   }
 
-  registerCategory(category: Category) {
+  registerCategory(category: Category): Observable<unknown> {
     return this.http.post(this.url, {
       id:    0,
       name:  category['name'],
@@ -37,7 +36,7 @@ export class CategoryService {
     )
   }
 
-  updateCategory(category: Category) {
+  updateCategory(category: Category): Observable<unknown> {
     return this.http.put(this.url, {
       id:    category['id'],
       name:  category['name'],
@@ -48,7 +47,7 @@ export class CategoryService {
     )
   }
 
-  deleteCategory(id: number) {
+  deleteCategory(id: number): Observable<unknown|number> {
     return this.http.delete(`${this.url}/${id}`).pipe(
       catchError(this.httpErrorService.handleError<number>('deleteCategory', -1))
     )

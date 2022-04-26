@@ -5,6 +5,15 @@
 .todo_header .todo_header_item {
   display:     inline-block;
   margin-left: 5px;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: #0033cc;
+}
+
+.todo_header .todo_header_item:hover{
+  text-decoration: underline;
+  color: #002080;
 }
 
 .todo_footer {
@@ -14,6 +23,15 @@
 .todo_footer .todo_footer_item {
   display:     inline-block;
   margin-left: 5px;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: #0033cc;
+}
+
+.todo_footer .todo_footer_item:hover{
+  text-decoration: underline;
+  color: #002080;
 }
 
 .card {
@@ -34,6 +52,15 @@
 .card_footer .card_footer_item {
   display:     inline-block;
   margin-left: 5px;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: #0033cc;
+}
+
+.todo_header .todo_header_item:hover{
+  text-decoration: underline;
+  color: #002080;
 }
 
 .card_footer .card_footer_item a:link,
@@ -42,6 +69,7 @@
   font-size: 0.9em;
   cursor:    pointer;
 }
+
 
 .body {
   white-space: pre-wrap;

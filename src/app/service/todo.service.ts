@@ -37,7 +37,7 @@ export class TodoService {
     )
   }
 
-  updateTodo(todo: Todo): Observable<unknown> {
+  updateTodo(todo: Todo): Observable<unknown|number> {
     return this.http.put(this.url, {
       id:         todo['id'],
       categoryId: todo['categoryId'],
