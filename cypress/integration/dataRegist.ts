@@ -44,15 +44,6 @@ describe('Make Data', () => {
     })
   });
 
-  function assertCards() {
-    cy.get("[data-cy='card']").each(($el, index, $list) => {
-      cy.get(`[data-cy=title${index}]`).should('have.text', todo[index].title)
-      cy.get(`[data-cy=body${index}]`).should('have.text', todo[index].body)
-      cy.get(`[data-cy=status${index}]`).should('have.text', stateMap.get(todo[index].state))
-      cy.get(`[data-cy=category${index}]`).should('have.text', categoryMap.get(todo[index].categoryId).name)
-    })
-  }
-
   const todos = [
    {
      "id": 1,

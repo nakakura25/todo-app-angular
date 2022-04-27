@@ -43,8 +43,11 @@ export class TodoListComponent implements OnInit {
   showTodoList() {
     this.todoService.getTodoList().subscribe(
       (response: Todo[]) => {
+//         setTimeout(() => {
+//           this.todos  = response;
+//         }, 5000)
         this.todos  = response;
-      });
+     });
     this.categoryService.getCategoryList().subscribe(
       (response: Category[]) => {
         this.categoryService.setCategoryOptions(response);
