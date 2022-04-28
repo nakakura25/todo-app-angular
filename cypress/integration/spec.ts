@@ -31,7 +31,7 @@ describe('My First Test', () => {
     cy.visit('/')
     cy.get("[data-cy='todo_header_item']").click();
     cy.wait(1000);
-    cy.get("#title").siblings("span").contains('Titleは必須です。')
+    cy.get("#title").siblings("span").contains('Title！は必須です。')
     cy.get("#body").siblings("span").contains('Bodyは必須です。')
     cy.get("#submitBtn").should('be.disabled')
     cy.get("[id=title]").type('testTitle');

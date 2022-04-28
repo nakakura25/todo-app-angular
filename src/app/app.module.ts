@@ -4,6 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 
+import { AmplifyAuthenticatorModule } from '@aws-amplify/ui-angular';
 import { ToastrModule } from 'ngx-toastr';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -31,6 +32,7 @@ import { CategoryRegisterComponent } from './component/category-register/categor
     HttpClientModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    AmplifyAuthenticatorModule,
     ToastrModule.forRoot({
       positionClass: 'toast-top-right',
     }),

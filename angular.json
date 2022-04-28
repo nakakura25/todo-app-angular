@@ -29,8 +29,9 @@
             "styles": [
               "src/styles.css",
               "node_modules/ngx-toastr/toastr.css",
+              "node_modules/@aws-amplify/ui-angular/theme.css"
             ],
-            "scripts": []
+            "scripts": [],
           },
           "configurations": {
             "production": {
@@ -100,6 +101,7 @@
             "styles": [
               "src/styles.css",
               "node_modules/ngx-toastr/toastr.css",
+              "node_modules/@aws-amplify/ui-angular/theme.css"
             ],
             "scripts": []
           }

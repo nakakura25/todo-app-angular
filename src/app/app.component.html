@@ -2,6 +2,16 @@
   <div class="header__content"><span class="header__logo" data-cy="header_title">{{title}}</span></div>
 </header>
 <main class="main">
-  <router-outlet></router-outlet>
+  <amplify-authenticator [formFields]="formFields" [socialProviders]="['google']" [hideSignUp]="true">
+    <ng-template
+      amplifySlot="authenticated"
+      let-user="user"
+      let-signOut="out">
+      <h2>Welcome, {{ user.username }}!</h2>
+      <button (click)="signOut()">Sign Out</button>
+    </ng-template>
+  </amplify-authenticator>
+  <div *ngIf="showTodo">
+    <router-outlet></router-outlet>
+  </div>
 </main>
-
